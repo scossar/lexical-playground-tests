@@ -1,7 +1,7 @@
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import ContentEditable from "~/ui/ContentEditable";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
-import ToolbarPlugin from "~/plugins/ToolbarPlugin";
+import ToolbarPlugin from "~/components/Toolbar";
 import Placeholder from "~/ui/Placeholder";
 
 export default function Editor() {

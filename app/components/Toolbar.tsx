@@ -15,9 +15,8 @@ import { $setBlocksType } from "@lexical/selection";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { HeadingTagType, $createHeadingNode } from "@lexical/rich-text";
 import DropDown, { DropDownItem } from "~/ui/DropDown";
-import * as React from "react";
 
-export default function ToolbarPlugin() {
+export default function Toolbar() {
   const [editor] = useLexicalComposerContext();
   const [isEditable, setIsEditable] = useState(() => editor.isEditable());
   const [blockType, setBlockType] =

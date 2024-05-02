@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useHydrated } from "~/hooks/useHydrated";
 
 type Props = {
