@@ -1,5 +1,6 @@
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import PlaygroundEditorTheme from "~/themes/PlaygroundEditorTheme";
+import { EditorNodes } from "~/editorNodes/EditorNodes";
 import Editor from "./Editor";
 
 export default function Composer() {
@@ -9,6 +10,7 @@ export default function Composer() {
       throw error;
     },
     theme: PlaygroundEditorTheme,
+    nodes: [...EditorNodes],
   };
   return (
     <>

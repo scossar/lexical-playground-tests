@@ -8,8 +8,10 @@
 
 import * as React from "react";
 import {
+  createContext,
   ReactNode,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -21,7 +23,7 @@ type DropDownContextType = {
   registerItem: (ref: React.RefObject<HTMLButtonElement>) => void;
 };
 
-const DropDownContext = React.createContext<DropDownContextType | null>(null);
+const DropDownContext = createContext<DropDownContextType | null>(null);
 
 const dropDownPadding = 4;
 
@@ -37,11 +39,10 @@ export function DropDownItem({
   title?: string;
 }) {
   const ref = useRef<HTMLButtonElement>(null);
-
-  const dropDownContext = React.useContext(DropDownContext);
+  const dropDownContext = useContext(DropDownContext);
 
   if (dropDownContext === null) {
-    throw new Error("DropDownItem must be used within a DropDown");
+    throw new Error("DropdownItem must be used within a DropDown");
   }
 
   const { registerItem } = dropDownContext;
@@ -71,7 +72,7 @@ function DropDownItems({
   onClose,
 }: {
   children: React.ReactNode;
-  dropDownRef: React.Ref<HTMLButtonElement>;
+  dropDownRef: React.Ref<HTMLDivElement>;
   onClose: () => void;
 }) {
   const [items, setItems] = useState<React.RefObject<HTMLButtonElement>[]>();
@@ -85,7 +86,7 @@ function DropDownItems({
     [setItems]
   );
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (!items) {
       return;
     }
@@ -135,13 +136,15 @@ function DropDownItems({
 
   return (
     <DropDownContext.Provider value={contextValue}>
-      <button
-        className="block dropdown"
+      <div
+        className="dropdown"
+        role="button"
+        tabIndex={0}
         ref={dropDownRef}
         onKeyDown={handleKeyDown}
       >
         {children}
-      </button>
+      </div>
     </DropDownContext.Provider>
   );
 }
@@ -156,14 +159,14 @@ export default function DropDown({
   stopCloseOnClickSelf,
 }: {
   disabled?: boolean;
+  buttonLabel?: string;
   buttonAriaLabel?: string;
   buttonClassName: string;
   buttonIconClassName?: string;
-  buttonLabel?: string;
   children: ReactNode;
   stopCloseOnClickSelf?: boolean;
-}): JSX.Element {
-  const dropDownRef = useRef<HTMLButtonElement>(null);
+}): React.JSX.Element {
+  const dropDownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [showDropDown, setShowDropDown] = useState(false);
 
@@ -180,7 +183,7 @@ export default function DropDown({
 
     if (showDropDown && button !== null && dropDown !== null) {
       const { top, left } = button.getBoundingClientRect();
-      dropDown.style.top = `${top + button.offsetHeight + dropDownPadding}px`;
+      dropDown.style.top = `${top + button?.offsetHeight + dropDownPadding}px`;
       dropDown.style.left = `${Math.min(
         left,
         window.innerWidth - dropDown.offsetWidth - 20

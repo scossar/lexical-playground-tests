@@ -84,12 +84,26 @@ export default function Toolbar() {
           <i className="icon h1" />
           <span className="text">Heading 1</span>
         </DropDownItem>
+        <DropDownItem
+          className={`item ${dropdownActiveClass(blockType === "h2")}`}
+          onClick={() => formatHeading("h2")}
+        >
+          <i className="icon h2" />
+          <span className="text">Heading 2</span>
+        </DropDownItem>
+        <DropDownItem
+          className={`item ${dropdownActiveClass(blockType === "h3")}`}
+          onClick={() => formatHeading("h3")}
+        >
+          <i className="icon h3" />
+          <span className="text">Heading 3</span>
+        </DropDownItem>
       </DropDown>
     );
   }
 
   return (
-    <div className="toolbar">
+    <div className="border toolbar border-b-slate-300">
       <BlockFormatDropDown
         disabled={!isEditable}
         blockType={blockType}
