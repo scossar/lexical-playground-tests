@@ -69,10 +69,9 @@ export function DropDownItem({
 function DropDownItems({
   children,
   dropDownRef,
-  onClose,
 }: {
   children: React.ReactNode;
-  dropDownRef: React.Ref<HTMLDivElement>;
+  dropDownRef: React.Ref<HTMLButtonElement>;
   onClose: () => void;
 }) {
   const [items, setItems] = useState<React.RefObject<HTMLButtonElement>[]>();
@@ -85,37 +84,6 @@ function DropDownItems({
     },
     [setItems]
   );
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (!items) {
-      return;
-    }
-
-    const key = event.key;
-
-    if (["Escape", "ArrowUp", "ArrowDown", "Tab"].includes(key)) {
-      event.preventDefault();
-    }
-
-    if (key === "Escape" || key === "Tab") {
-      onClose();
-    } else if (key === "ArrowUp") {
-      setHighlightedItem((prev) => {
-        if (!prev) {
-          return items[0];
-        }
-        const index = items.indexOf(prev) - 1;
-        return items[index === -1 ? items.length - 1 : index];
-      });
-    } else if (key === "ArrowDown") {
-      setHighlightedItem((prev) => {
-        if (!prev) {
-          return items[0];
-        }
-        return items[items.indexOf(prev) + 1];
-      });
-    }
-  };
 
   const contextValue = useMemo(
     () => ({
@@ -136,15 +104,8 @@ function DropDownItems({
 
   return (
     <DropDownContext.Provider value={contextValue}>
-      <div
-        className="dropdown"
-        role="button"
-        tabIndex={0}
-        ref={dropDownRef}
-        onKeyDown={handleKeyDown}
-      >
-        {children}
-      </div>
+      <button className="dropdown" ref={dropDownRef}></button>
+      {children}
     </DropDownContext.Provider>
   );
 }
@@ -164,7 +125,7 @@ export default function DropDown({
   buttonIconClassName?: string;
   children: ReactNode;
 }): React.JSX.Element {
-  const dropDownRef = useRef<HTMLDivElement>(null);
+  const dropDownRef = useRef<HTMLButtonElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [showDropDown, setShowDropDown] = useState(false);
 
@@ -206,28 +167,6 @@ export default function DropDown({
       };
     }
   }, [dropDownRef, buttonRef, showDropDown]);
-
-  useEffect(() => {
-    const handleButtonPositionUpdate = () => {
-      if (showDropDown) {
-        const button = buttonRef.current;
-        const dropDown = dropDownRef.current;
-        if (button !== null && dropDown !== null) {
-          const { top } = button.getBoundingClientRect();
-          const newPosition = top + button.offsetHeight + dropDownPadding;
-          if (newPosition !== dropDown.getBoundingClientRect().top) {
-            dropDown.style.top = `${newPosition}px`;
-          }
-        }
-      }
-    };
-
-    document.addEventListener("scroll", handleButtonPositionUpdate);
-
-    return () => {
-      document.removeEventListener("scroll", handleButtonPositionUpdate);
-    };
-  }, [buttonRef, dropDownRef, showDropDown]);
 
   return (
     <>
