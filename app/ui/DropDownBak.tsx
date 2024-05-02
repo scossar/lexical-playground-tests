@@ -156,6 +156,7 @@ export default function DropDown({
   buttonClassName,
   buttonIconClassName,
   children,
+  stopCloseOnClickSelf,
 }: {
   disabled?: boolean;
   buttonLabel?: string;
@@ -163,6 +164,7 @@ export default function DropDown({
   buttonClassName: string;
   buttonIconClassName?: string;
   children: ReactNode;
+  stopCloseOnClickSelf?: boolean;
 }): React.JSX.Element {
   const dropDownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -195,6 +197,14 @@ export default function DropDown({
     if (button !== null && showDropDown) {
       const handle = (event: MouseEvent) => {
         const target = event.target;
+        if (stopCloseOnClickSelf) {
+          if (
+            dropDownRef.current &&
+            dropDownRef.current.contains(target as Node)
+          ) {
+            return;
+          }
+        }
         if (!button.contains(target as Node)) {
           setShowDropDown(false);
         }
@@ -205,7 +215,7 @@ export default function DropDown({
         document.removeEventListener("click", handle);
       };
     }
-  }, [dropDownRef, buttonRef, showDropDown]);
+  }, [dropDownRef, buttonRef, showDropDown, stopCloseOnClickSelf]);
 
   useEffect(() => {
     const handleButtonPositionUpdate = () => {
