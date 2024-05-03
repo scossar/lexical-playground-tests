@@ -9,7 +9,7 @@
  * Copyright (c) Zalgorithm.
  */
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   $isListNode,
   INSERT_UNORDERED_LIST_COMMAND,
@@ -22,10 +22,16 @@ import {
   $isRootOrShadowRoot,
   LexicalEditor,
   NodeKey,
+  CAN_UNDO_COMMAND,
+  CAN_REDO_COMMAND,
   COMMAND_PRIORITY_CRITICAL,
   SELECTION_CHANGE_COMMAND,
 } from "lexical";
-import { $findMatchingParent, $getNearestNodeOfType } from "@lexical/utils";
+import {
+  $findMatchingParent,
+  $getNearestNodeOfType,
+  mergeRegister,
+} from "@lexical/utils";
 import { $setBlocksType } from "@lexical/selection";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import {
@@ -72,6 +78,8 @@ export default function Toolbar() {
   const [selectedElementKey, setSelectedElementKey] = useState<NodeKey | null>(
     null
   );
+  const [canUndo, setCanUndo] = useState(false);
+  const [canRedo, setCanRedo] = useState(false);
 
   function dropdownActiveClass(active: boolean) {
     if (active) {
@@ -136,6 +144,35 @@ export default function Toolbar() {
     );
   }, [editor, $updateToolbar]);
 
+  useEffect(() => {
+    return mergeRegister(
+      editor.registerEditableListener((editable) => {
+        setIsEditable(editable);
+      }),
+      activeEditor.registerUpdateListener(({ editorState }) => {
+        editorState.read(() => {
+          $updateToolbar();
+        });
+      }),
+      activeEditor.registerCommand<boolean>(
+        CAN_UNDO_COMMAND,
+        (payload) => {
+          setCanUndo(payload);
+          return false;
+        },
+        COMMAND_PRIORITY_CRITICAL
+      ),
+      activeEditor.registerCommand<boolean>(
+        CAN_REDO_COMMAND,
+        (payload) => {
+          setCanRedo(payload);
+          return false;
+        },
+        COMMAND_PRIORITY_CRITICAL
+      )
+    );
+  }, [$updateToolbar, activeEditor, editor]);
+
   function BlockFormatDropDown({
     editor,
     blockType,
@@ -164,6 +201,7 @@ export default function Toolbar() {
 
     const formatBulletList = () => {
       if (blockType !== "bullet") {
+        console.log("in the formatList function");
         editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
       } else {
         formatParagraph();

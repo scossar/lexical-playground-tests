@@ -10,3 +10,9 @@
 .ZalgorithmEditorTheme__h4 {
   @apply text-xl;
 }
+.ZalgorithmEditorTheme__ul {
+  @apply list-disc list-inside;
+}
+.ZalgorithmEditorTheme__ol {
+  @apply list-decimal list-inside;
+}

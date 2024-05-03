@@ -1,3 +1,4 @@
+import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import ContentEditable from "~/ui/ContentEditable";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
@@ -21,6 +22,7 @@ export default function Editor() {
         placeholder={placeholder}
         ErrorBoundary={LexicalErrorBoundary}
       />
+      <ListPlugin />
     </>
   );
 }

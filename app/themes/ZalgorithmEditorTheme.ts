@@ -9,6 +9,10 @@ const theme: EditorThemeClasses = {
     h3: "ZalgorithmEditorTheme__h3",
     h4: "ZalgorithmEditorTheme__h4",
   },
+  list: {
+    ul: "ZalgorithmEditorTheme__ul",
+    ol: "ZalgorithmEditorTheme__ol",
+  },
 };
 
 export default theme;
