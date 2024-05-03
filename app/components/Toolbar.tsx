@@ -71,21 +71,21 @@ export default function Toolbar() {
         buttonAriaLabel="Formatting options for text stype"
       >
         <DropDownItem
-          className={`item z-10 ${dropdownActiveClass(blockType === "h1")}`}
+          className={`item ${dropdownActiveClass(blockType === "h1")}`}
           onClick={() => formatHeading("h1")}
         >
           <i className="icon h1" />
           <span className="text">Heading 1</span>
         </DropDownItem>
         <DropDownItem
-          className={`item z-10 ${dropdownActiveClass(blockType === "h2")}`}
+          className={`item ${dropdownActiveClass(blockType === "h2")}`}
           onClick={() => formatHeading("h2")}
         >
           <i className="icon h2" />
           <span className="text">Heading 2</span>
         </DropDownItem>
         <DropDownItem
-          className={`item z-10 ${dropdownActiveClass(blockType === "h3")}`}
+          className={`item ${dropdownActiveClass(blockType === "h3")}`}
           onClick={() => formatHeading("h3")}
         >
           <i className="icon h3" />
@@ -96,7 +96,7 @@ export default function Toolbar() {
   }
 
   return (
-    <div className="relative z-20 h-12 overflow-visible border toolbar border-b-slate-300">
+    <div className="relative z-10 h-8 overflow-visible border toolbar border-b-slate-300">
       <BlockFormatDropDown
         disabled={!isEditable}
         blockType={blockType}

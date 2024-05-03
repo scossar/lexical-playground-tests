@@ -170,7 +170,7 @@ export default function DropDown({
 
       {showDropDown && (
         <DropDownItems dropDownRef={dropDownRef} onClose={handleClose}>
-          <div className="z-20 flex flex-col p-2 bg-purple-300 opacity-1 w-fit">
+          <div className="flex flex-col p-2 bg-white border rounded-sm border-slate-200 w-fit">
             {children}
           </div>
         </DropDownItems>

@@ -1,15 +1,15 @@
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
-import PlaygroundEditorTheme from "~/themes/PlaygroundEditorTheme";
+import ZalgorithmEditorTheme from "~/themes/ZalgorithmEditorTheme";
 import { EditorNodes } from "~/editorNodes/EditorNodes";
 import Editor from "./Editor";
 
 export default function Composer() {
   const initialConfig = {
-    namespace: "Playground",
+    namespace: "Zalgorithm",
     onError: (error: Error) => {
       throw error;
     },
-    theme: PlaygroundEditorTheme,
+    theme: ZalgorithmEditorTheme,
     nodes: [...EditorNodes],
   };
   return (
