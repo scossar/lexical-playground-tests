@@ -9,27 +9,54 @@
  * Copyright (c) Zalgorithm.
  */
 
-import { useCallback, useState } from "react";
-import { INSERT_UNORDERED_LIST_COMMAND } from "@lexical/list";
+import { useCallback, useEffect, useState } from "react";
+import {
+  $isListNode,
+  INSERT_UNORDERED_LIST_COMMAND,
+  ListNode,
+} from "@lexical/list";
 import {
   $getSelection,
   $createParagraphNode,
   $isRangeSelection,
   $isRootOrShadowRoot,
   LexicalEditor,
+  NodeKey,
+  COMMAND_PRIORITY_CRITICAL,
+  SELECTION_CHANGE_COMMAND,
 } from "lexical";
-import { $findMatchingParent } from "@lexical/utils";
+import { $findMatchingParent, $getNearestNodeOfType } from "@lexical/utils";
 import { $setBlocksType } from "@lexical/selection";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { HeadingTagType, $createHeadingNode } from "@lexical/rich-text";
+import {
+  HeadingTagType,
+  $createHeadingNode,
+  $isHeadingNode,
+} from "@lexical/rich-text";
 import DropDown, { DropDownItem } from "~/ui/DropDown";
+
+type BlockType =
+  | "bullet"
+  | "check"
+  | "code"
+  | "h1"
+  | "h2"
+  | "h3"
+  | "h4"
+  | "h5"
+  | "h6"
+  | "number"
+  | "paragraph"
+  | "quote";
 
 export default function Toolbar() {
   const [editor] = useLexicalComposerContext();
   const [activeEditor, setActiveEditor] = useState(editor);
   const [isEditable, setIsEditable] = useState(() => editor.isEditable());
-  const [blockType, setBlockType] =
-    useState<keyof typeof BlockTypeToBlockName>("paragraph");
+  const [blockType, setBlockType] = useState<BlockType>("paragraph");
+  const [selectedElementKey, setSelectedElementKey] = useState<NodeKey | null>(
+    null
+  );
 
   const blockTypeToBlockName = {
     bullet: "Bulleted List",
@@ -54,13 +81,68 @@ export default function Toolbar() {
     }
   }
 
+  const $updateToolbar = useCallback(() => {
+    const selection = $getSelection();
+    if ($isRangeSelection(selection)) {
+      const anchorNode = selection.anchor.getNode();
+      let element =
+        anchorNode.getKey() === "root"
+          ? anchorNode
+          : $findMatchingParent(anchorNode, (e) => {
+              const parent = e.getParent();
+              return parent !== null && $isRootOrShadowRoot(parent);
+            });
+
+      if (element === null) {
+        element = anchorNode.getTopLevelElementOrThrow();
+      }
+
+      const elementKey = element.getKey();
+      const elementDOM = activeEditor.getElementByKey(elementKey);
+
+      if (elementDOM !== null) {
+        setSelectedElementKey(elementKey);
+        if ($isListNode(element)) {
+          console.log("it is a list type");
+          const parentList = $getNearestNodeOfType<ListNode>(
+            anchorNode,
+            ListNode
+          );
+          const type = parentList
+            ? parentList.getListType()
+            : element.getListType();
+          setBlockType(type);
+        } else {
+          const type = $isHeadingNode(element)
+            ? element.getTag()
+            : element.getType();
+          if (type in blockTypeToBlockName) {
+            setBlockType(type as BlockType);
+          }
+        }
+      }
+    }
+  }, [activeEditor, blockTypeToBlockName]);
+
+  useEffect(() => {
+    return editor.registerCommand(
+      SELECTION_CHANGE_COMMAND,
+      (_payload, newEditor) => {
+        $updateToolbar();
+        setActiveEditor(newEditor);
+        return false;
+      },
+      COMMAND_PRIORITY_CRITICAL
+    );
+  }, [editor, $updateToolbar]);
+
   function BlockFormatDropDown({
     editor,
     blockType,
     disabled = false,
   }: {
     editor: LexicalEditor;
-    blockType: keyof typeof blockTypeToBlockName;
+    blockType: BlockType;
     disabled: boolean;
   }): React.JSX.Element {
     const formatParagraph = () => {
