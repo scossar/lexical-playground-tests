@@ -24,8 +24,6 @@ type DropDownContextType = {
 
 const DropDownContext = createContext<DropDownContextType | null>(null);
 
-const dropDownPadding = 4;
-
 export function DropDownItem({
   children,
   className,
@@ -172,7 +170,9 @@ export default function DropDown({
 
       {showDropDown && (
         <DropDownItems dropDownRef={dropDownRef} onClose={handleClose}>
-          {children}
+          <div className="z-20 flex flex-col p-2 bg-purple-300 opacity-1 w-fit">
+            {children}
+          </div>
         </DropDownItems>
       )}
     </>
