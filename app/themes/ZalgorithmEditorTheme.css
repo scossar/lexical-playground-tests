@@ -13,6 +13,6 @@
 .ZalgorithmEditorTheme__ul {
   @apply list-disc list-inside;
 }
-.ZalgorithmEditorTheme__ol {
+.ZalgorithmEditorTheme__ol1 {
   @apply list-decimal list-inside;
 }

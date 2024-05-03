@@ -11,7 +11,7 @@ const theme: EditorThemeClasses = {
   },
   list: {
     ul: "ZalgorithmEditorTheme__ul",
-    ol: "ZalgorithmEditorTheme__ol",
+    ol: "ZalgorithmEditorTheme__ol1",
   },
 };
 

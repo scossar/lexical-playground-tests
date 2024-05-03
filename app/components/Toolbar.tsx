@@ -12,6 +12,7 @@
 import { useCallback, useEffect, useState } from "react";
 import {
   $isListNode,
+  INSERT_ORDERED_LIST_COMMAND,
   INSERT_UNORDERED_LIST_COMMAND,
   ListNode,
 } from "@lexical/list";
@@ -201,8 +202,15 @@ export default function Toolbar() {
 
     const formatBulletList = () => {
       if (blockType !== "bullet") {
-        console.log("in the formatList function");
         editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
+      } else {
+        formatParagraph();
+      }
+    };
+
+    const formatNumberedList = () => {
+      if (blockType !== "number") {
+        editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
       } else {
         formatParagraph();
       }
@@ -249,6 +257,13 @@ export default function Toolbar() {
         >
           <i className="icon bullet-list" />
           <span className="text">Bullet List</span>
+        </DropDownItem>
+        <DropDownItem
+          className={`item ${dropdownActiveClass(blockType === "number")}`}
+          onClick={formatNumberedList}
+        >
+          <i className="icon numbered-list" />
+          <span className="text">Numbered List</span>
         </DropDownItem>
       </DropDown>
     );
