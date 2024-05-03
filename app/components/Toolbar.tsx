@@ -9,7 +9,7 @@
  * Copyright (c) Zalgorithm.
  */
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   $isListNode,
   INSERT_UNORDERED_LIST_COMMAND,
@@ -49,6 +49,21 @@ type BlockType =
   | "paragraph"
   | "quote";
 
+const blockTypeToBlockName = {
+  bullet: "Bulleted List",
+  check: "Check List",
+  code: "Code Block",
+  h1: "Heading 1",
+  h2: "Heading 2",
+  h3: "Heading 3",
+  h4: "Heading 4",
+  h5: "Heading 5",
+  h6: "Heading 6",
+  number: "Numbered List",
+  paragraph: "Normal",
+  quote: "Quote",
+};
+
 export default function Toolbar() {
   const [editor] = useLexicalComposerContext();
   const [activeEditor, setActiveEditor] = useState(editor);
@@ -57,21 +72,6 @@ export default function Toolbar() {
   const [selectedElementKey, setSelectedElementKey] = useState<NodeKey | null>(
     null
   );
-
-  const blockTypeToBlockName = {
-    bullet: "Bulleted List",
-    check: "Check List",
-    code: "Code Block",
-    h1: "Heading 1",
-    h2: "Heading 2",
-    h3: "Heading 3",
-    h4: "Heading 4",
-    h5: "Heading 5",
-    h6: "Heading 6",
-    number: "Numbered List",
-    paragraph: "Normal",
-    quote: "Quote",
-  };
 
   function dropdownActiveClass(active: boolean) {
     if (active) {
@@ -122,7 +122,7 @@ export default function Toolbar() {
         }
       }
     }
-  }, [activeEditor, blockTypeToBlockName]);
+  }, [activeEditor]);
 
   useEffect(() => {
     return editor.registerCommand(
