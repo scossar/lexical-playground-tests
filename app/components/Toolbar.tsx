@@ -10,7 +10,12 @@
  */
 
 import { useState } from "react";
-import { $getSelection, LexicalEditor } from "lexical";
+import {
+  $getSelection,
+  $createParagraphNode,
+  $isRangeSelection,
+  LexicalEditor,
+} from "lexical";
 import { $setBlocksType } from "@lexical/selection";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { HeadingTagType, $createHeadingNode } from "@lexical/rich-text";
@@ -54,6 +59,14 @@ export default function Toolbar() {
     blockType: keyof typeof BlockTypeToBlockName;
     disabled: boolean;
   }): React.JSX.Element {
+    const formatParagraph = () => {
+      editor.update(() => {
+        const selection = $getSelection();
+        if ($isRangeSelection(selection)) {
+          $setBlocksType(selection, () => $createParagraphNode());
+        }
+      });
+    };
     const formatHeading = (headingSize: HeadingTagType) => {
       if (blockType !== headingSize) {
         editor.update(() => {
