@@ -96,7 +96,7 @@ export default function Toolbar() {
   }
 
   return (
-    <div className="h-12 overflow-visible border toolbar border-b-slate-300">
+    <div className="relative z-20 h-12 overflow-visible border toolbar border-b-slate-300">
       <BlockFormatDropDown
         disabled={!isEditable}
         blockType={blockType}

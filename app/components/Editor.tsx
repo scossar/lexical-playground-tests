@@ -13,7 +13,7 @@ export default function Editor() {
       <RichTextPlugin
         contentEditable={
           <div className="editor-scroller">
-            <div className="editor">
+            <div className="relative z-0 editor">
               <ContentEditable />
             </div>
           </div>
