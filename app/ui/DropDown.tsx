@@ -17,7 +17,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { createPortal } from "react-dom";
 
 type DropDownContextType = {
   registerItem: (ref: React.RefObject<HTMLButtonElement>) => void;
@@ -138,20 +137,6 @@ export default function DropDown({
 
   useEffect(() => {
     const button = buttonRef.current;
-    const dropDown = dropDownRef.current;
-
-    if (showDropDown && button !== null && dropDown !== null) {
-      const { top, left } = button.getBoundingClientRect();
-      dropDown.style.top = `${top + button?.offsetHeight + dropDownPadding}px`;
-      dropDown.style.left = `${Math.min(
-        left,
-        window.innerWidth - dropDown.offsetWidth - 20
-      )}px`;
-    }
-  }, [dropDownRef, buttonRef, showDropDown]);
-
-  useEffect(() => {
-    const button = buttonRef.current;
 
     if (button !== null && showDropDown) {
       const handle = (event: MouseEvent) => {
@@ -185,13 +170,11 @@ export default function DropDown({
         <i className="chevron-down" />
       </button>
 
-      {showDropDown &&
-        createPortal(
-          <DropDownItems dropDownRef={dropDownRef} onClose={handleClose}>
-            {children}
-          </DropDownItems>,
-          document.body
-        )}
+      {showDropDown && (
+        <DropDownItems dropDownRef={dropDownRef} onClose={handleClose}>
+          {children}
+        </DropDownItems>
+      )}
     </>
   );
 }

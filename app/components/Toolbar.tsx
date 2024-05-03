@@ -21,8 +21,6 @@ export default function Toolbar() {
   const [isEditable, setIsEditable] = useState(() => editor.isEditable());
   const [blockType, setBlockType] =
     useState<keyof typeof BlockTypeToBlockName>("paragraph");
-  const [rootType, setRootType] =
-    useState<keyof typeof rootTypeToRootName>("root");
 
   const BlockTypeToBlockName = {
     bullet: "Bulleted List",
@@ -39,9 +37,6 @@ export default function Toolbar() {
     quote: "Quote",
   };
 
-  // not sure about this:
-  const rootTypeToRootName = { root: "Root", table: "Table" };
-
   function dropdownActiveClass(active: boolean) {
     if (active) {
       return "active dropdown-item-active";
@@ -53,12 +48,10 @@ export default function Toolbar() {
   function BlockFormatDropDown({
     editor,
     blockType,
-    rootType,
     disabled = false,
   }: {
     editor: LexicalEditor;
     blockType: keyof typeof BlockTypeToBlockName;
-    rootType: keyof typeof rootTypeToRootName;
     disabled: boolean;
   }): React.JSX.Element {
     const formatHeading = (headingSize: HeadingTagType) => {
@@ -107,7 +100,6 @@ export default function Toolbar() {
       <BlockFormatDropDown
         disabled={!isEditable}
         blockType={blockType}
-        rootType={rootType}
         editor={editor}
       />
     </div>
