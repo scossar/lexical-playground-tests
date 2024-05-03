@@ -1,12 +1,12 @@
-.ZalgorithmTheme__h1 {
+.ZalgorithmEditorTheme__h1 {
   @apply text-4xl;
 }
-.ZalgorithmTheme__h2 {
+.ZalgorithmEditorTheme__h2 {
   @apply text-3xl;
 }
-.ZalgorithmTheme__h3 {
+.ZalgorithmEditorTheme__h3 {
   @apply text-2xl;
 }
-.ZalgorithmTheme__h4 {
+.ZalgorithmEditorTheme__h4 {
   @apply text-xl;
 }

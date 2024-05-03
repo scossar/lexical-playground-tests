@@ -5,7 +5,7 @@ import ToolbarPlugin from "~/components/Toolbar";
 import Placeholder from "~/ui/Placeholder";
 
 export default function Editor() {
-  const text = "Enter some text...";
+  const text = "";
   const placeholder = <Placeholder>{text}</Placeholder>;
   return (
     <>
