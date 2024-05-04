@@ -1,5 +1,12 @@
 interface IconProps {
-  id: "undo" | "redo" | "caret-up" | "caret-down" | "italic" | "bold";
+  id:
+    | "undo"
+    | "redo"
+    | "caret-up"
+    | "caret-down"
+    | "italic"
+    | "bold"
+    | "paragraph";
   className?: string;
   x?: number;
   y?: number;

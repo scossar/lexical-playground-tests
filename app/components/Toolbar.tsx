@@ -252,7 +252,9 @@ export default function Toolbar() {
           onClick={formatParagraph}
         >
           <i className="icon paragraph" />
-          <span className="text grow">Normal</span>
+          <span className="text grow">
+            <Icon className="inline-block w-4 h-4" id="paragraph" /> Paragraph
+          </span>
         </DropDownItem>
         <DropDownItem
           className={`item my-1 hover:bg-slate-100 ${dropdownActiveClass(
@@ -326,7 +328,7 @@ export default function Toolbar() {
         type="button"
         aria-label="Undo"
       >
-        <Icon id="undo" className="w-4 h-4" />
+        <Icon id="redo" className="w-4 h-4 scale-x-[-1]" />
         <i className="format undo" />
       </button>
       <button
