@@ -23,7 +23,6 @@ import {
   $isRootOrShadowRoot,
   $isTextNode,
   LexicalEditor,
-  NodeKey,
   CAN_UNDO_COMMAND,
   CAN_REDO_COMMAND,
   COMMAND_PRIORITY_CRITICAL,
@@ -86,9 +85,6 @@ export default function Toolbar() {
   const [activeEditor, setActiveEditor] = useState(editor);
   const [isEditable, setIsEditable] = useState(() => editor.isEditable());
   const [blockType, setBlockType] = useState<BlockType>("paragraph");
-  const [selectedElementKey, setSelectedElementKey] = useState<NodeKey | null>(
-    null
-  );
   const [canUndo, setCanUndo] = useState(false);
   const [canRedo, setCanRedo] = useState(false);
   const [isBold, setIsBold] = useState(false);
@@ -125,7 +121,6 @@ export default function Toolbar() {
       setIsItalic(selection.hasFormat("italic"));
 
       if (elementDOM !== null) {
-        setSelectedElementKey(elementKey);
         if ($isListNode(element)) {
           const parentList = $getNearestNodeOfType<ListNode>(
             anchorNode,
@@ -301,7 +296,6 @@ export default function Toolbar() {
           )}`}
           onClick={formatParagraph}
         >
-          <i className="icon paragraph" />
           <span className="text grow">
             <Icon className="inline-block w-4 h-4" id="paragraph" /> Paragraph
           </span>
@@ -312,7 +306,6 @@ export default function Toolbar() {
           )}`}
           onClick={() => formatHeading("h1")}
         >
-          <i className="icon h1" />
           <span className="text">
             <Icon id="heading" className="inline-block w-4 h-4" /> Heading 1
           </span>
@@ -323,7 +316,6 @@ export default function Toolbar() {
           )}`}
           onClick={() => formatHeading("h2")}
         >
-          <i className="icon h2" />
           <span className="text">
             <Icon id="heading" className="inline-block w-4 h-4" /> Heading 2
           </span>
@@ -334,7 +326,6 @@ export default function Toolbar() {
           )}`}
           onClick={() => formatHeading("h3")}
         >
-          <i className="icon h3" />
           <span className="text">
             <Icon id="heading" className="inline-block w-4 h-4" /> Heading 3
           </span>
@@ -345,7 +336,6 @@ export default function Toolbar() {
           )}`}
           onClick={formatBulletList}
         >
-          <i className="icon bullet-list" />
           <span className="text">
             <Icon id="list-bullet" className="inline-block w-4 h-4" /> Bullet
             List
@@ -357,7 +347,6 @@ export default function Toolbar() {
           )}`}
           onClick={formatNumberedList}
         >
-          <i className="icon numbered-list" />
           <span className="text">
             <Icon id="list-bullet" className="inline-block w-4 h-4" /> Numbered
             List
@@ -369,7 +358,6 @@ export default function Toolbar() {
           )}`}
           onClick={formatQuote}
         >
-          <i className="icon quote" />
           <span className="text">
             <Icon id="quote" className="inline-block w-4 h-4" /> Quote
           </span>
@@ -393,7 +381,6 @@ export default function Toolbar() {
         aria-label="Undo"
       >
         <Icon id="redo" className="w-3 h-3 scale-x-[-1]" />
-        <i className="format undo" />
       </button>
       <button
         disabled={!canRedo || !isEditable}
@@ -408,7 +395,6 @@ export default function Toolbar() {
         aria-label="Redo"
       >
         <Icon id="redo" className="w-3 h-3" />
-        <i className="format redo" />
       </button>
       <BlockFormatDropDown
         disabled={!isEditable}
@@ -420,7 +406,7 @@ export default function Toolbar() {
         onClick={() => {
           activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
         }}
-        className={`mr-1 py-1 rounded-sm ${
+        className={`mr-1 rounded-sm ${
           isBold ? "bg-blue-400 text-white" : "bg-white text-slate-900"
         }`}
         title="Bold"
@@ -428,14 +414,13 @@ export default function Toolbar() {
         aria-label="Format text as bold"
       >
         <Icon className="w-4 h-4" id="bold" />
-        <i className="format bold" />
       </button>
       <button
         disabled={!isEditable}
         onClick={() => {
           activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
         }}
-        className={`mr-1 py-1 rounded-sm ${
+        className={`mr-1 rounded-sm ${
           isItalic ? "bg-blue-400 text-white" : "bg-white text-slate-900"
         }`}
         title="Italic"
@@ -443,15 +428,13 @@ export default function Toolbar() {
         aria-label="Format text as italic"
       >
         <Icon className="w-4 h-4" id="italic" />
-        <i className="italic format" />
       </button>
       <button
         onClick={clearFormatting}
         className={`mr-1`}
         title="Clear selected text formatting"
       >
-        <Icon id="reset" className="inline-block w-4 h-4" />
-        Clear
+        <Icon id="reset" className="inline-block w-4 h-4" y={-3} />
       </button>
     </div>
   );
