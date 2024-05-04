@@ -13,6 +13,7 @@ const theme: EditorThemeClasses = {
     ul: "ZalgorithmEditorTheme__ul",
     ol: "ZalgorithmEditorTheme__ol1",
   },
+  quote: "ZalgorithmEditorTheme__quote",
 };
 
 export default theme;

@@ -41,7 +41,9 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import {
   HeadingTagType,
   $createHeadingNode,
+  $createQuoteNode,
   $isHeadingNode,
+  $isQuoteNode,
 } from "@lexical/rich-text";
 import DropDown, { DropDownItem } from "~/ui/DropDown";
 
@@ -225,6 +227,15 @@ export default function Toolbar() {
       }
     };
 
+    const formatQuote = () => {
+      if (blockType !== "quote") {
+        editor.update(() => {
+          const selection = $getSelection();
+          $setBlocksType(selection, () => $createQuoteNode());
+        });
+      }
+    };
+
     return (
       <DropDown
         disabled={disabled}
@@ -273,6 +284,13 @@ export default function Toolbar() {
         >
           <i className="icon numbered-list" />
           <span className="text">Numbered List</span>
+        </DropDownItem>
+        <DropDownItem
+          className={`item ${dropdownActiveClass(blockType === "quote")}`}
+          onClick={formatQuote}
+        >
+          <i className="icon quote" />
+          <span className="text">Quote</span>
         </DropDownItem>
       </DropDown>
     );

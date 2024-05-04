@@ -16,3 +16,6 @@
 .ZalgorithmEditorTheme__ol1 {
   @apply list-decimal list-inside;
 }
+.ZalgorithmEditorTheme__quote {
+  @apply pl-4 mb-3 ml-5 text-sm border border-l-4 text-slate-700 border-slate-400;
+}
