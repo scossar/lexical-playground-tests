@@ -1,12 +1,18 @@
 interface IconProps {
   id:
-    | "undo"
+    | "reset"
     | "redo"
     | "caret-up"
     | "caret-down"
     | "italic"
     | "bold"
-    | "paragraph";
+    | "paragraph"
+    | "heading"
+    | "list-bullet"
+    | "quote"
+    | "code"
+    | "link"
+    | "pencil";
   className?: string;
   x?: number;
   y?: number;
