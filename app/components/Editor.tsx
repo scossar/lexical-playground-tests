@@ -13,9 +13,9 @@ export default function Editor() {
       <ToolbarPlugin />
       <RichTextPlugin
         contentEditable={
-          <div className="editor-scroller">
-            <div className="editor">
-              <ContentEditable />
+          <div className="relative editor-scroller">
+            <div className="relative editor">
+              <ContentEditable className="relative min-h-48" />
             </div>
           </div>
         }

@@ -230,45 +230,47 @@ export default function Toolbar() {
         disabled={disabled}
         buttonClassName="toolbar-item block-controls px-2"
         buttonLabel={blockTypeToBlockName[blockType]}
-        buttonAriaLabel="Formatting options for text stype"
+        buttonAriaLabel="Formatting options for text type"
       >
         <DropDownItem
-          className={`item ${dropdownActiveClass(blockType === "paragraph")}`}
+          className={`item pl-2 ${dropdownActiveClass(
+            blockType === "paragraph"
+          )}`}
           onClick={formatParagraph}
         >
           <i className="icon paragraph" />
           <span className="text">Normal</span>
         </DropDownItem>
         <DropDownItem
-          className={`item ${dropdownActiveClass(blockType === "h1")}`}
+          className={`item pl-2 ${dropdownActiveClass(blockType === "h1")}`}
           onClick={() => formatHeading("h1")}
         >
           <i className="icon h1" />
           <span className="text">Heading 1</span>
         </DropDownItem>
         <DropDownItem
-          className={`item ${dropdownActiveClass(blockType === "h2")}`}
+          className={`item pl-2 ${dropdownActiveClass(blockType === "h2")}`}
           onClick={() => formatHeading("h2")}
         >
           <i className="icon h2" />
           <span className="text">Heading 2</span>
         </DropDownItem>
         <DropDownItem
-          className={`item ${dropdownActiveClass(blockType === "h3")}`}
+          className={`item pl-2 ${dropdownActiveClass(blockType === "h3")}`}
           onClick={() => formatHeading("h3")}
         >
           <i className="icon h3" />
           <span className="text">Heading 3</span>
         </DropDownItem>
         <DropDownItem
-          className={`item ${dropdownActiveClass(blockType === "bullet")}`}
+          className={`item pl-2 ${dropdownActiveClass(blockType === "bullet")}`}
           onClick={formatBulletList}
         >
           <i className="icon bullet-list" />
           <span className="text">Bullet List</span>
         </DropDownItem>
         <DropDownItem
-          className={`item ${dropdownActiveClass(blockType === "number")}`}
+          className={`item pl-2 ${dropdownActiveClass(blockType === "number")}`}
           onClick={formatNumberedList}
         >
           <i className="icon numbered-list" />
@@ -279,7 +281,7 @@ export default function Toolbar() {
   }
 
   return (
-    <div className="relative z-10 overflow-visible border h-7 toolbar border-b-slate-300">
+    <div className="sticky border h-7 toolbar border-b-slate-300">
       <button
         disabled={!canUndo || !isEditable}
         onClick={() => {

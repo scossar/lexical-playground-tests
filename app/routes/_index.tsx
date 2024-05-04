@@ -18,7 +18,7 @@ export default function Index() {
       <h1 className="text-3xl">Lexical playground</h1>
       <ClientOnly
         fallback={
-          <div className="max-w-full p-2 border rounded-sm min-h-16 border-slate-500"></div>
+          <div className="max-w-full p-2 border rounded-sm min-h-48 border-slate-500"></div>
         }
       >
         {() => <Composer />}

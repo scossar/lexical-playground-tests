@@ -17,6 +17,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 
 type DropDownContextType = {
   registerItem: (ref: React.RefObject<HTMLButtonElement>) => void;
@@ -68,7 +69,7 @@ function DropDownItems({
   dropDownRef,
 }: {
   children: React.ReactNode;
-  dropDownRef: React.Ref<HTMLButtonElement>;
+  dropDownRef: React.Ref<HTMLDivElement>;
   onClose: () => void;
 }) {
   const [items, setItems] = useState<React.RefObject<HTMLButtonElement>[]>();
@@ -101,8 +102,12 @@ function DropDownItems({
 
   return (
     <DropDownContext.Provider value={contextValue}>
-      <button className="dropdown" ref={dropDownRef}></button>
-      {children}
+      <div
+        className="fixed flex flex-col dropdown w-fit items-start"
+        ref={dropDownRef}
+      >
+        {children}
+      </div>
     </DropDownContext.Provider>
   );
 }
@@ -122,9 +127,10 @@ export default function DropDown({
   buttonIconClassName?: string;
   children: ReactNode;
 }): React.JSX.Element {
-  const dropDownRef = useRef<HTMLButtonElement>(null);
+  const dropDownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [showDropDown, setShowDropDown] = useState(false);
+  const dropDownPadding = 4;
 
   const handleClose = () => {
     setShowDropDown(false);
@@ -132,6 +138,21 @@ export default function DropDown({
       buttonRef.current.focus();
     }
   };
+
+  useEffect(() => {
+    const button = buttonRef.current;
+    const dropDown = dropDownRef.current;
+
+    if (showDropDown && button !== null && dropDown !== null) {
+      const { top, left } = button.getBoundingClientRect();
+      console.log(`left: ${left}, top: ${top}`);
+      dropDown.style.top = `${top + button.offsetHeight + dropDownPadding}px`;
+      dropDown.style.left = `${Math.min(
+        left,
+        window.innerWidth - dropDown.offsetWidth - 20
+      )}px`;
+    }
+  }, [dropDownRef, buttonRef, showDropDown]);
 
   useEffect(() => {
     const button = buttonRef.current;
@@ -168,13 +189,13 @@ export default function DropDown({
         <i className="chevron-down" />
       </button>
 
-      {showDropDown && (
-        <DropDownItems dropDownRef={dropDownRef} onClose={handleClose}>
-          <div className="flex flex-col items-start p-2 bg-white border rounded-sm border-slate-200 w-fit">
+      {showDropDown &&
+        createPortal(
+          <DropDownItems dropDownRef={dropDownRef} onClose={handleClose}>
             {children}
-          </div>
-        </DropDownItems>
-      )}
+          </DropDownItems>,
+          document.body
+        )}
     </>
   );
 }
