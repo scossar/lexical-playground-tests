@@ -26,6 +26,7 @@ import {
   CAN_UNDO_COMMAND,
   CAN_REDO_COMMAND,
   COMMAND_PRIORITY_CRITICAL,
+  FORMAT_TEXT_COMMAND,
   REDO_COMMAND,
   SELECTION_CHANGE_COMMAND,
   UNDO_COMMAND,
@@ -83,6 +84,8 @@ export default function Toolbar() {
   );
   const [canUndo, setCanUndo] = useState(false);
   const [canRedo, setCanRedo] = useState(false);
+  const [isBold, setIsBold] = useState(false);
+  const [isItalic, setIsItalic] = useState(false);
 
   function dropdownActiveClass(active: boolean) {
     if (active) {
@@ -110,6 +113,9 @@ export default function Toolbar() {
 
       const elementKey = element.getKey();
       const elementDOM = activeEditor.getElementByKey(elementKey);
+
+      setIsBold(selection.hasFormat("bold"));
+      setIsItalic(selection.hasFormat("italic"));
 
       if (elementDOM !== null) {
         setSelectedElementKey(elementKey);
@@ -273,20 +279,72 @@ export default function Toolbar() {
   }
 
   return (
-    <div className="relative z-10 h-8 overflow-visible border toolbar border-b-slate-300">
+    <div className="relative z-10 overflow-visible border h-7 toolbar border-b-slate-300">
       <button
         disabled={!canUndo || !isEditable}
         onClick={() => {
           activeEditor.dispatchCommand(UNDO_COMMAND, undefined);
         }}
+        title="Undo"
+        className={`mx-1 px-1 border rounded-sm border-slate-400 ${
+          !canUndo || !isEditable ? "bg-slate-200" : "bg-white"
+        }`}
+        type="button"
+        aria-label="Undo"
       >
         Undo
+        <i className="format undo" />
+      </button>
+      <button
+        disabled={!canRedo || !isEditable}
+        onClick={() => {
+          activeEditor.dispatchCommand(REDO_COMMAND, undefined);
+        }}
+        title="Redo"
+        type="button"
+        className={`mx-1 px-1 border rounded-sm border-slate-400 ${
+          !canRedo || !isEditable ? "bg-slate-200" : "bg-white"
+        }`}
+        aria-label="Redo"
+      >
+        Redo
+        <i className="format redo" />
       </button>
       <BlockFormatDropDown
         disabled={!isEditable}
         blockType={blockType}
         editor={editor}
       />
+      <button
+        disabled={!isEditable}
+        onClick={() => {
+          activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
+        }}
+        className={`mx-1 px-1 border border-slate-400 rounded-sm ${
+          isBold ? "bg-blue-400 text-white" : "bg-white text-slate-900"
+        }`}
+        title="Bold"
+        type="button"
+        aria-label="Format text as bold"
+      >
+        B
+        <i className="format bold" />
+      </button>
+      <button
+        disabled={!isEditable}
+        onClick={() => {
+          activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
+        }}
+        className={`mx-1 px-1 border border-slate-400 rounded-sm ${
+          isItalic ? "bg-blue-400 text-white" : "bg-white text-slate-900"
+        }`}
+        title="Italic"
+        type="button"
+        aria-label="Format text as italic"
+      >
+        I
+        <i className="italic format" />
+      </button>
     </div>
   );
 }
