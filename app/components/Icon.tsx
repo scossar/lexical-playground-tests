@@ -12,7 +12,13 @@ interface IconProps {
     | "quote"
     | "code"
     | "link"
-    | "pencil";
+    | "pencil"
+    | "heart"
+    | "heart-filled"
+    | "fa-list-ul"
+    | "fa-list-ol"
+    | "fa-1"
+    | "fa-h";
   className?: string;
   x?: number;
   y?: number;

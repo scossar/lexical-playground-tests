@@ -263,7 +263,10 @@ export default function Toolbar() {
           onClick={() => formatHeading("h1")}
         >
           <i className="icon h1" />
-          <span className="text">Heading 1</span>
+          <span className="text">
+            <Icon id="fa-h" className="inline-block w-4 h-4" />
+            <Icon id="fa-1" className="inline-block w-4 h-4" /> Heading 1
+          </span>
         </DropDownItem>
         <DropDownItem
           className={`item my-1 hover:bg-slate-100 ${dropdownActiveClass(
@@ -290,7 +293,10 @@ export default function Toolbar() {
           onClick={formatBulletList}
         >
           <i className="icon bullet-list" />
-          <span className="text">Bullet List</span>
+          <span className="text">
+            <Icon id="fa-list-ul" className="inline-block w-4 h-4" /> Bullet
+            List
+          </span>
         </DropDownItem>
         <DropDownItem
           className={`item my-1 hover:bg-slate-100 ${dropdownActiveClass(
@@ -299,7 +305,10 @@ export default function Toolbar() {
           onClick={formatNumberedList}
         >
           <i className="icon numbered-list" />
-          <span className="text">Numbered List</span>
+          <span className="text">
+            <Icon id="fa-list-ol" className="inline-block w-4 h-4" /> Numbered
+            List
+          </span>
         </DropDownItem>
         <DropDownItem
           className={`item my-1 hover:bg-slate-100 ${dropdownActiveClass(
