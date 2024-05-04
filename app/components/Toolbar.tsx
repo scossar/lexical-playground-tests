@@ -47,6 +47,8 @@ import {
 } from "@lexical/rich-text";
 import DropDown, { DropDownItem } from "~/ui/DropDown";
 
+import Icon from "./Icon";
+
 type BlockType =
   | "bullet"
   | "check"
@@ -304,13 +306,13 @@ export default function Toolbar() {
           activeEditor.dispatchCommand(UNDO_COMMAND, undefined);
         }}
         title="Undo"
-        className={`mx-1 px-1 border rounded-sm border-slate-400 ${
+        className={`mx-1 p-1 rounded-full ${
           !canUndo || !isEditable ? "bg-slate-200" : "bg-white"
         }`}
         type="button"
         aria-label="Undo"
       >
-        Undo
+        <Icon id="undo" className="w-4 h-4" />
         <i className="format undo" />
       </button>
       <button
@@ -320,12 +322,12 @@ export default function Toolbar() {
         }}
         title="Redo"
         type="button"
-        className={`mx-1 px-1 border rounded-sm border-slate-400 ${
+        className={`mx-1 p-1 rounded-full ${
           !canRedo || !isEditable ? "bg-slate-200" : "bg-white"
         }`}
         aria-label="Redo"
       >
-        Redo
+        <Icon id="redo" className="w-4 h-4" />
         <i className="format redo" />
       </button>
       <BlockFormatDropDown
