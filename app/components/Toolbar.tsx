@@ -21,6 +21,7 @@ import {
   $createParagraphNode,
   $isRangeSelection,
   $isRootOrShadowRoot,
+  $isTextNode,
   LexicalEditor,
   NodeKey,
   CAN_UNDO_COMMAND,
@@ -33,11 +34,13 @@ import {
 } from "lexical";
 import {
   $findMatchingParent,
+  $getNearestBlockElementAncestorOrThrow,
   $getNearestNodeOfType,
   mergeRegister,
 } from "@lexical/utils";
 import { $setBlocksType } from "@lexical/selection";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { $isDecoratorBlockNode } from "@lexical/react/LexicalDecoratorBlockNode";
 import {
   HeadingTagType,
   $createHeadingNode,
@@ -47,7 +50,7 @@ import {
 } from "@lexical/rich-text";
 import DropDown, { DropDownItem } from "~/ui/DropDown";
 
-import Icon from "./Icon";
+import Icon from "~/components/Icon";
 
 export type BlockType =
   | "bullet"
@@ -186,6 +189,52 @@ export default function Toolbar() {
       )
     );
   }, [$updateToolbar, activeEditor, editor]);
+
+  const clearFormatting = useCallback(() => {
+    activeEditor.update(() => {
+      const selection = $getSelection();
+      if ($isRangeSelection(selection)) {
+        const anchor = selection.anchor;
+        const focus = selection.focus;
+        const nodes = selection.getNodes();
+        const extractedNodes = selection.extract();
+
+        if (anchor.key === focus.key && anchor.offset === focus.offset) {
+          return;
+        }
+
+        nodes.forEach((node, idx) => {
+          if ($isTextNode(node)) {
+            let textNode = node;
+            if (idx === 0 && anchor.offset !== 0) {
+              textNode = textNode.splitText(anchor.offset)[1] || textNode;
+            }
+            if (idx === nodes.length - 1) {
+              textNode = textNode.splitText(focus.offset)[0] || textNode;
+            }
+
+            const extractedTextNode = extractedNodes[0];
+            if (nodes.length === 1 && $isTextNode(extractedTextNode)) {
+              textNode = extractedTextNode;
+            }
+
+            if (textNode.__style !== "") {
+              textNode.setStyle("");
+            }
+            if (textNode.__format !== 0) {
+              textNode.setFormat(0);
+              $getNearestBlockElementAncestorOrThrow(textNode).setFormat("");
+            }
+            node = textNode;
+          } else if ($isHeadingNode(node) || $isQuoteNode(node)) {
+            node.replace($createParagraphNode(), true);
+          } else if ($isDecoratorBlockNode(node)) {
+            node.setFormat("");
+          }
+        });
+      }
+    });
+  }, [activeEditor]);
 
   function BlockFormatDropDown({
     editor,
@@ -395,6 +444,13 @@ export default function Toolbar() {
       >
         <Icon className="w-4 h-4" id="italic" />
         <i className="italic format" />
+      </button>
+      <button
+        onClick={clearFormatting}
+        className={`mr-1`}
+        title="Clear text formatting"
+      >
+        Clear
       </button>
     </div>
   );
