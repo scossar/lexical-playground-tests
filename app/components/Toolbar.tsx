@@ -340,14 +340,14 @@ export default function Toolbar() {
         onClick={() => {
           activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
         }}
-        className={`mx-1 px-1 border border-slate-400 rounded-sm ${
+        className={`mr-1 py-1 rounded-sm ${
           isBold ? "bg-blue-400 text-white" : "bg-white text-slate-900"
         }`}
         title="Bold"
         type="button"
         aria-label="Format text as bold"
       >
-        B
+        <Icon className="w-4 h-4" id="bold" />
         <i className="format bold" />
       </button>
       <button
@@ -355,14 +355,14 @@ export default function Toolbar() {
         onClick={() => {
           activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
         }}
-        className={`mx-1 px-1 border border-slate-400 rounded-sm ${
+        className={`mr-1 py-1 rounded-sm ${
           isItalic ? "bg-blue-400 text-white" : "bg-white text-slate-900"
         }`}
         title="Italic"
         type="button"
         aria-label="Format text as italic"
       >
-        I
+        <Icon className="w-4 h-4" id="italic" />
         <i className="italic format" />
       </button>
     </div>

@@ -19,6 +19,8 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 
+import Icon from "~/components/Icon";
+
 type DropDownContextType = {
   registerItem: (ref: React.RefObject<HTMLButtonElement>) => void;
 };
@@ -183,7 +185,10 @@ export default function DropDown({
       >
         {buttonIconClassName && <span className={buttonIconClassName} />}
         {buttonLabel && (
-          <span className="text dropdown-button-text">{buttonLabel}</span>
+          <span className="text dropdown-button-text">
+            {buttonLabel}
+            <Icon className="inline-block w-4 h-4" id="caret-down" />
+          </span>
         )}
         <i className="chevron-down" />
       </button>
