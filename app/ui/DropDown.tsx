@@ -103,7 +103,7 @@ function DropDownItems({
   return (
     <DropDownContext.Provider value={contextValue}>
       <div
-        className="fixed flex flex-col dropdown w-fit items-start"
+        className="fixed flex flex-col items-start p-2 border rounded-sm border-slate-200 bg-slate-50 dropdown w-fit"
         ref={dropDownRef}
       >
         {children}
@@ -145,7 +145,6 @@ export default function DropDown({
 
     if (showDropDown && button !== null && dropDown !== null) {
       const { top, left } = button.getBoundingClientRect();
-      console.log(`left: ${left}, top: ${top}`);
       dropDown.style.top = `${top + button.offsetHeight + dropDownPadding}px`;
       dropDown.style.left = `${Math.min(
         left,

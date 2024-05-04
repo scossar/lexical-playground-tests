@@ -15,7 +15,7 @@ export default function Editor() {
         contentEditable={
           <div className="relative editor-scroller">
             <div className="relative editor">
-              <ContentEditable className="relative min-h-48" />
+              <ContentEditable className="relative p-2 min-h-48" />
             </div>
           </div>
         }

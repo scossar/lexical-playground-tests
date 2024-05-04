@@ -233,44 +233,42 @@ export default function Toolbar() {
         buttonAriaLabel="Formatting options for text type"
       >
         <DropDownItem
-          className={`item pl-2 ${dropdownActiveClass(
-            blockType === "paragraph"
-          )}`}
+          className={`item ${dropdownActiveClass(blockType === "paragraph")}`}
           onClick={formatParagraph}
         >
           <i className="icon paragraph" />
           <span className="text">Normal</span>
         </DropDownItem>
         <DropDownItem
-          className={`item pl-2 ${dropdownActiveClass(blockType === "h1")}`}
+          className={`item ${dropdownActiveClass(blockType === "h1")}`}
           onClick={() => formatHeading("h1")}
         >
           <i className="icon h1" />
           <span className="text">Heading 1</span>
         </DropDownItem>
         <DropDownItem
-          className={`item pl-2 ${dropdownActiveClass(blockType === "h2")}`}
+          className={`item ${dropdownActiveClass(blockType === "h2")}`}
           onClick={() => formatHeading("h2")}
         >
           <i className="icon h2" />
           <span className="text">Heading 2</span>
         </DropDownItem>
         <DropDownItem
-          className={`item pl-2 ${dropdownActiveClass(blockType === "h3")}`}
+          className={`item ${dropdownActiveClass(blockType === "h3")}`}
           onClick={() => formatHeading("h3")}
         >
           <i className="icon h3" />
           <span className="text">Heading 3</span>
         </DropDownItem>
         <DropDownItem
-          className={`item pl-2 ${dropdownActiveClass(blockType === "bullet")}`}
+          className={`item ${dropdownActiveClass(blockType === "bullet")}`}
           onClick={formatBulletList}
         >
           <i className="icon bullet-list" />
           <span className="text">Bullet List</span>
         </DropDownItem>
         <DropDownItem
-          className={`item pl-2 ${dropdownActiveClass(blockType === "number")}`}
+          className={`item ${dropdownActiveClass(blockType === "number")}`}
           onClick={formatNumberedList}
         >
           <i className="icon numbered-list" />
