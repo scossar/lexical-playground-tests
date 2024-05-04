@@ -26,7 +26,9 @@ import {
   CAN_UNDO_COMMAND,
   CAN_REDO_COMMAND,
   COMMAND_PRIORITY_CRITICAL,
+  REDO_COMMAND,
   SELECTION_CHANGE_COMMAND,
+  UNDO_COMMAND,
 } from "lexical";
 import {
   $findMatchingParent,
@@ -136,8 +138,9 @@ export default function Toolbar() {
     return editor.registerCommand(
       SELECTION_CHANGE_COMMAND,
       (_payload, newEditor) => {
-        console.log("selection change command");
         $updateToolbar();
+        // since this implementation is only dealing with a single editor
+        // I'm not sure this call (or the activeEditor variable) is needed.
         setActiveEditor(newEditor);
         return false;
       },
@@ -145,7 +148,6 @@ export default function Toolbar() {
     );
   }, [editor, $updateToolbar]);
 
-  /*
   useEffect(() => {
     return mergeRegister(
       editor.registerEditableListener((editable) => {
@@ -174,7 +176,6 @@ export default function Toolbar() {
       )
     );
   }, [$updateToolbar, activeEditor, editor]);
-   */
 
   function BlockFormatDropDown({
     editor,
@@ -273,6 +274,14 @@ export default function Toolbar() {
 
   return (
     <div className="relative z-10 h-8 overflow-visible border toolbar border-b-slate-300">
+      <button
+        disabled={!canUndo || !isEditable}
+        onClick={() => {
+          activeEditor.dispatchCommand(UNDO_COMMAND, undefined);
+        }}
+      >
+        Undo
+      </button>
       <BlockFormatDropDown
         disabled={!isEditable}
         blockType={blockType}
