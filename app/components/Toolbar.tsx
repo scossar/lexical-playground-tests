@@ -49,7 +49,7 @@ import DropDown, { DropDownItem } from "~/ui/DropDown";
 
 import Icon from "./Icon";
 
-type BlockType =
+export type BlockType =
   | "bullet"
   | "check"
   | "code"
@@ -244,6 +244,7 @@ export default function Toolbar() {
         buttonClassName="toolbar-item block-controls px-2"
         buttonLabel={blockTypeToBlockName[blockType]}
         buttonAriaLabel="Formatting options for text type"
+        blockType={blockType}
       >
         <DropDownItem
           className={`item my-1 flex items-start hover:bg-slate-100 ${dropdownActiveClass(
@@ -329,7 +330,7 @@ export default function Toolbar() {
   }
 
   return (
-    <div className="sticky flex items-center border h-7 toolbar border-b-slate-300">
+    <div className="sticky flex items-center h-8 border toolbar border-b-slate-300">
       <button
         disabled={!canUndo || !isEditable}
         onClick={() => {
