@@ -448,8 +448,9 @@ export default function Toolbar() {
       <button
         onClick={clearFormatting}
         className={`mr-1`}
-        title="Clear text formatting"
+        title="Clear selected text formatting"
       >
+        <Icon id="reset" className="inline-block w-4 h-4" />
         Clear
       </button>
     </div>
