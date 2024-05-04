@@ -112,7 +112,6 @@ export default function Toolbar() {
       if (elementDOM !== null) {
         setSelectedElementKey(elementKey);
         if ($isListNode(element)) {
-          console.log("it is a list type");
           const parentList = $getNearestNodeOfType<ListNode>(
             anchorNode,
             ListNode
@@ -145,6 +144,7 @@ export default function Toolbar() {
     );
   }, [editor, $updateToolbar]);
 
+  /*
   useEffect(() => {
     return mergeRegister(
       editor.registerEditableListener((editable) => {
@@ -173,6 +173,7 @@ export default function Toolbar() {
       )
     );
   }, [$updateToolbar, activeEditor, editor]);
+   */
 
   function BlockFormatDropDown({
     editor,
