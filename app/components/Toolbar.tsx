@@ -136,6 +136,7 @@ export default function Toolbar() {
     return editor.registerCommand(
       SELECTION_CHANGE_COMMAND,
       (_payload, newEditor) => {
+        console.log("selection change command");
         $updateToolbar();
         setActiveEditor(newEditor);
         return false;
