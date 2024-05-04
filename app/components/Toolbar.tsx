@@ -93,7 +93,7 @@ export default function Toolbar() {
 
   function dropdownActiveClass(active: boolean) {
     if (active) {
-      return "active dropdown-item-active underline";
+      return "active dropdown-item-active bg-slate-100 rounded-sm";
     } else {
       return "";
     }
@@ -246,49 +246,63 @@ export default function Toolbar() {
         buttonAriaLabel="Formatting options for text type"
       >
         <DropDownItem
-          className={`item ${dropdownActiveClass(blockType === "paragraph")}`}
+          className={`item my-1 flex items-start hover:bg-slate-100 ${dropdownActiveClass(
+            blockType === "paragraph"
+          )}`}
           onClick={formatParagraph}
         >
           <i className="icon paragraph" />
-          <span className="text">Normal</span>
+          <span className="text grow">Normal</span>
         </DropDownItem>
         <DropDownItem
-          className={`item ${dropdownActiveClass(blockType === "h1")}`}
+          className={`item my-1 hover:bg-slate-100 ${dropdownActiveClass(
+            blockType === "h1"
+          )}`}
           onClick={() => formatHeading("h1")}
         >
           <i className="icon h1" />
           <span className="text">Heading 1</span>
         </DropDownItem>
         <DropDownItem
-          className={`item ${dropdownActiveClass(blockType === "h2")}`}
+          className={`item my-1 hover:bg-slate-100 ${dropdownActiveClass(
+            blockType === "h2"
+          )}`}
           onClick={() => formatHeading("h2")}
         >
           <i className="icon h2" />
           <span className="text">Heading 2</span>
         </DropDownItem>
         <DropDownItem
-          className={`item ${dropdownActiveClass(blockType === "h3")}`}
+          className={`item my-1 hover:bg-slate-100 ${dropdownActiveClass(
+            blockType === "h3"
+          )}`}
           onClick={() => formatHeading("h3")}
         >
           <i className="icon h3" />
           <span className="text">Heading 3</span>
         </DropDownItem>
         <DropDownItem
-          className={`item ${dropdownActiveClass(blockType === "bullet")}`}
+          className={`item my-1 hover:bg-slate-100 ${dropdownActiveClass(
+            blockType === "bullet"
+          )}`}
           onClick={formatBulletList}
         >
           <i className="icon bullet-list" />
           <span className="text">Bullet List</span>
         </DropDownItem>
         <DropDownItem
-          className={`item ${dropdownActiveClass(blockType === "number")}`}
+          className={`item my-1 hover:bg-slate-100 ${dropdownActiveClass(
+            blockType === "number"
+          )}`}
           onClick={formatNumberedList}
         >
           <i className="icon numbered-list" />
           <span className="text">Numbered List</span>
         </DropDownItem>
         <DropDownItem
-          className={`item ${dropdownActiveClass(blockType === "quote")}`}
+          className={`item my-1 hover:bg-slate-100 ${dropdownActiveClass(
+            blockType === "quote"
+          )}`}
           onClick={formatQuote}
         >
           <i className="icon quote" />
@@ -299,7 +313,7 @@ export default function Toolbar() {
   }
 
   return (
-    <div className="sticky border h-7 toolbar border-b-slate-300">
+    <div className="sticky flex items-center border h-7 toolbar border-b-slate-300">
       <button
         disabled={!canUndo || !isEditable}
         onClick={() => {

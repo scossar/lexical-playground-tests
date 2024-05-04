@@ -105,7 +105,7 @@ function DropDownItems({
   return (
     <DropDownContext.Provider value={contextValue}>
       <div
-        className="fixed flex flex-col items-start p-2 border rounded-sm border-slate-200 bg-slate-50 dropdown w-fit"
+        className="fixed flex flex-col items-start px-1 text-sm bg-white border rounded-sm border-slate-200 dropdown w-fit"
         ref={dropDownRef}
       >
         {children}
@@ -185,7 +185,7 @@ export default function DropDown({
       >
         {buttonIconClassName && <span className={buttonIconClassName} />}
         {buttonLabel && (
-          <span className="text dropdown-button-text">
+          <span className="text-sm text dropdown-button-text">
             {buttonLabel}
             <Icon className="inline-block w-4 h-4" id="caret-down" />
           </span>
