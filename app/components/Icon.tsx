@@ -18,6 +18,8 @@ interface IconProps {
     | "fa-list-ul"
     | "fa-list-ol"
     | "fa-1"
+    | "fa-2"
+    | "fa-3"
     | "fa-h";
   className?: string;
   x?: number;

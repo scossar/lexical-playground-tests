@@ -264,8 +264,7 @@ export default function Toolbar() {
         >
           <i className="icon h1" />
           <span className="text">
-            <Icon id="fa-h" className="inline-block w-4 h-4" />
-            <Icon id="fa-1" className="inline-block w-4 h-4" /> Heading 1
+            <Icon id="heading" className="inline-block w-4 h-4" /> Heading 1
           </span>
         </DropDownItem>
         <DropDownItem
@@ -275,7 +274,9 @@ export default function Toolbar() {
           onClick={() => formatHeading("h2")}
         >
           <i className="icon h2" />
-          <span className="text">Heading 2</span>
+          <span className="text">
+            <Icon id="heading" className="inline-block w-4 h-4" /> Heading 2
+          </span>
         </DropDownItem>
         <DropDownItem
           className={`item my-1 hover:bg-slate-100 ${dropdownActiveClass(
@@ -284,7 +285,9 @@ export default function Toolbar() {
           onClick={() => formatHeading("h3")}
         >
           <i className="icon h3" />
-          <span className="text">Heading 3</span>
+          <span className="text">
+            <Icon id="heading" className="inline-block w-4 h-4" /> Heading 3
+          </span>
         </DropDownItem>
         <DropDownItem
           className={`item my-1 hover:bg-slate-100 ${dropdownActiveClass(
@@ -294,7 +297,7 @@ export default function Toolbar() {
         >
           <i className="icon bullet-list" />
           <span className="text">
-            <Icon id="fa-list-ul" className="inline-block w-4 h-4" /> Bullet
+            <Icon id="list-bullet" className="inline-block w-4 h-4" /> Bullet
             List
           </span>
         </DropDownItem>
@@ -306,7 +309,7 @@ export default function Toolbar() {
         >
           <i className="icon numbered-list" />
           <span className="text">
-            <Icon id="fa-list-ol" className="inline-block w-4 h-4" /> Numbered
+            <Icon id="list-bullet" className="inline-block w-4 h-4" /> Numbered
             List
           </span>
         </DropDownItem>
@@ -317,7 +320,9 @@ export default function Toolbar() {
           onClick={formatQuote}
         >
           <i className="icon quote" />
-          <span className="text">Quote</span>
+          <span className="text">
+            <Icon id="quote" className="inline-block w-4 h-4" /> Quote
+          </span>
         </DropDownItem>
       </DropDown>
     );
