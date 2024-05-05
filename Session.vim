@@ -13,57 +13,25 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +1 term://~/remix/discourse/lexical-playground//311076:/bin/bash
-badd +6 tailwind.config.ts
-badd +3 app/tailwind.css
-badd +12 app/root.tsx
-badd +28 app/routes/_index.tsx
-badd +13 app/hooks/useHydrate.ts
-badd +1 app/components/ClientOnly.tsx
-badd +1 app/hooks/useHydrated.ts
-badd +24 app/components/Composer.tsx
-badd +27 ~/.config/nvim/init.lua
-badd +0 term://~/remix/discourse/lexical-playground//358560:/bin/bash
-badd +26 app/components/Editor.tsx
-badd +1 package.json
-badd +2 node_modules/vite-node/vite-node.mjs
-badd +35 app/plugins/ToolbarPlugin.tsx
-badd +120 app/components/Toolbar.tsx
-badd +0 Lexical.md
-badd +10 vite.config.ts
-badd +1 tsconfig.json
-badd +173 app/ui/DropDown.tsx
-badd +5 app/editorNodes/editorNodes.ts
-badd +244 app/ui/DropDownBak.tsx
-badd +53 app/themes/PlaygroundEditorTheme.css
-badd +23 app/ui/ContentEditable.css
-badd +12 app/themes/ZalgorithmEditorTheme.css
-badd +112 app/themes/PlaygroundEditorTheme.ts
-badd +10 app/themes/ZalgorithmEditorTheme.ts
+badd +1 app/components/Editor.tsx
+badd +23 app/themes/ZalgorithmEditorTheme.css
+badd +11 ~/.config/nvim/coc-settings.json
 argglobal
 %argdel
-edit app/components/Toolbar.tsx
+edit app/themes/ZalgorithmEditorTheme.css
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
-wincmd _ | wincmd |
-vsplit
-1wincmd h
-wincmd w
-wincmd _ | wincmd |
-split
-1wincmd k
-wincmd _ | wincmd |
-vsplit
-1wincmd h
-wincmd w
-wincmd w
 wincmd _ | wincmd |
 vsplit
 wincmd _ | wincmd |
 vsplit
 2wincmd h
 wincmd w
+wincmd w
+wincmd _ | wincmd |
+split
+1wincmd k
 wincmd w
 let &splitbelow = s:save_splitbelow
 let &splitright = s:save_splitright
@@ -74,11 +42,16 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-wincmd =
+exe 'vert 1resize ' . ((&columns * 31 + 191) / 382)
+exe 'vert 2resize ' . ((&columns * 175 + 191) / 382)
+exe '3resize ' . ((&lines * 31 + 37) / 75)
+exe 'vert 3resize ' . ((&columns * 174 + 191) / 382)
+exe '4resize ' . ((&lines * 41 + 37) / 75)
+exe 'vert 4resize ' . ((&columns * 174 + 191) / 382)
 argglobal
 enew
 file NERD_tree_tab_1
-balt app/ui/DropDown.tsx
+balt app/components/Editor.tsx
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -89,7 +62,7 @@ setlocal fdn=20
 setlocal nofen
 wincmd w
 argglobal
-balt app/themes/ZalgorithmEditorTheme.ts
+balt ~/.config/nvim/coc-settings.json
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -100,19 +73,17 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 89 - ((29 * winheight(0) + 26) / 52)
+let s:l = 23 - ((22 * winheight(0) + 36) / 73)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 89
-normal! 09|
+keepjumps 23
+normal! 07|
 wincmd w
 argglobal
-if bufexists(fnamemodify("app/ui/DropDown.tsx", ":p")) | buffer app/ui/DropDown.tsx | else | edit app/ui/DropDown.tsx | endif
-if &buftype ==# 'terminal'
-  silent file app/ui/DropDown.tsx
-endif
-balt app/themes/PlaygroundEditorTheme.ts
+enew | setl bt=help
+help coc-config@en
+balt ~/.config/nvim/coc-settings.json
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -123,30 +94,19 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 174 - ((39 * winheight(0) + 26) / 52)
+let s:l = 1720 - ((0 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 174
-normal! 06|
+keepjumps 1720
+normal! 057|
 wincmd w
 argglobal
-enew
-balt app/routes/_index.tsx
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-wincmd w
-argglobal
-if bufexists(fnamemodify("term://~/remix/discourse/lexical-playground//311076:/bin/bash", ":p")) | buffer term://~/remix/discourse/lexical-playground//311076:/bin/bash | else | edit term://~/remix/discourse/lexical-playground//311076:/bin/bash | endif
+if bufexists(fnamemodify("~/.config/nvim/coc-settings.json", ":p")) | buffer ~/.config/nvim/coc-settings.json | else | edit ~/.config/nvim/coc-settings.json | endif
 if &buftype ==# 'terminal'
-  silent file term://~/remix/discourse/lexical-playground//311076:/bin/bash
+  silent file ~/.config/nvim/coc-settings.json
 endif
+balt app/themes/ZalgorithmEditorTheme.css
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -155,36 +115,22 @@ setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 132 - ((19 * winheight(0) + 10) / 20)
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 11 - ((10 * winheight(0) + 20) / 41)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 132
-normal! 058|
+keepjumps 11
+normal! 034|
 wincmd w
-argglobal
-if bufexists(fnamemodify("term://~/remix/discourse/lexical-playground//358560:/bin/bash", ":p")) | buffer term://~/remix/discourse/lexical-playground//358560:/bin/bash | else | edit term://~/remix/discourse/lexical-playground//358560:/bin/bash | endif
-if &buftype ==# 'terminal'
-  silent file term://~/remix/discourse/lexical-playground//358560:/bin/bash
-endif
-balt app/routes/_index.tsx
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-let s:l = 360 - ((8 * winheight(0) + 10) / 20)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 360
-normal! 0
-wincmd w
-5wincmd w
-wincmd =
+4wincmd w
+exe 'vert 1resize ' . ((&columns * 31 + 191) / 382)
+exe 'vert 2resize ' . ((&columns * 175 + 191) / 382)
+exe '3resize ' . ((&lines * 31 + 37) / 75)
+exe 'vert 3resize ' . ((&columns * 174 + 191) / 382)
+exe '4resize ' . ((&lines * 41 + 37) / 75)
+exe 'vert 4resize ' . ((&columns * 174 + 191) / 382)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
