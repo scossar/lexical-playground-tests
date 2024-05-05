@@ -19,3 +19,6 @@
 .ZalgorithmEditorTheme__quote {
   @apply pl-4 mb-3 ml-5 text-sm border border-l-4 text-slate-700 border-slate-400;
 }
+.ZalgorithmEditorTheme__link {
+  @apply font-semibold text-blue-900 hover:underline hover:cursor-pointer;
+}
