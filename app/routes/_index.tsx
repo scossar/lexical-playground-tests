@@ -1,6 +1,6 @@
 import type { MetaFunction } from "@remix-run/node";
 import { ClientOnly } from "~/components/ClientOnly";
-import Composer from "~/components/Composer";
+import Composer from "~/components/zalgEditor/Composer";
 
 export const meta: MetaFunction = () => {
   return [

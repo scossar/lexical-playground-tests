@@ -1,6 +1,6 @@
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
-import ZalgorithmEditorTheme from "~/themes/ZalgorithmEditorTheme";
-import { EditorNodes } from "~/editorNodes/EditorNodes";
+import ZalgEditorTheme from "./themes/ZalgEditorTheme";
+import { EditorNodes } from "./editorNodes/EditorNodes";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import Editor from "./Editor";
 
@@ -10,7 +10,7 @@ export default function Composer() {
     onError: (error: Error) => {
       throw error;
     },
-    theme: ZalgorithmEditorTheme,
+    theme: ZalgEditorTheme,
     nodes: [...EditorNodes],
   };
   return (

@@ -1,6 +1,6 @@
 import type { EditorThemeClasses } from "lexical";
 
-import "~/components/zalgEditor/themes/ZalgEditorTheme.css";
+import "./ZalgEditorTheme.css";
 
 const theme: EditorThemeClasses = {
   heading: {

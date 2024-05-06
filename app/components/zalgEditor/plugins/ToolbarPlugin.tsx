@@ -50,8 +50,8 @@ import {
   $isHeadingNode,
   $isQuoteNode,
 } from "@lexical/rich-text";
-import { $getSelectedNode } from "~/utils/getSelectedNode";
-import DropDown, { DropDownItem } from "~/ui/DropDown";
+import { $getSelectedNode } from "../utils/getSelectedNode";
+import DropDown, { DropDownItem } from "../ui/DropDown";
 
 import Icon from "~/components/Icon";
 
@@ -84,7 +84,7 @@ const blockTypeToBlockName = {
   quote: "Quote",
 };
 
-export default function Toolbar() {
+export default function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
   const [activeEditor, setActiveEditor] = useState(editor);
   const [isEditable, setIsEditable] = useState(() => editor.isEditable());
