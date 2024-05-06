@@ -9,7 +9,7 @@
  * Copyright (c) Zalgorithm.
  */
 
-import { useCallback, useEffect, useState } from "react";
+import { Dispatch, useCallback, useEffect, useState } from "react";
 import { $isLinkNode } from "@lexical/link";
 import {
   $isListNode,
@@ -84,7 +84,11 @@ const blockTypeToBlockName = {
   quote: "Quote",
 };
 
-export default function Toolbar() {
+export default function Toolbar({
+  setIsLinkEditMode,
+}: {
+  setIsLinkEditMode: Dispatch<boolean>;
+}) {
   const [editor] = useLexicalComposerContext();
   const [activeEditor, setActiveEditor] = useState(editor);
   const [isEditable, setIsEditable] = useState(() => editor.isEditable());
@@ -94,6 +98,8 @@ export default function Toolbar() {
   const [elementFormat, setElementFormat] = useState<ElementFormatType>("left");
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
+
+  const [tmpToggledValue, setTmpToggledValue] = useState(false);
 
   function dropdownActiveClass(active: boolean) {
     if (active) {
@@ -389,6 +395,12 @@ export default function Toolbar() {
     );
   }
 
+  const insertLink = () => {
+    setTmpToggledValue(!tmpToggledValue);
+    console.log(`toggling tmp value to: ${tmpToggledValue}`);
+    setIsLinkEditMode(tmpToggledValue);
+  };
+
   return (
     <div className="sticky flex items-center h-8 border toolbar border-b-slate-300">
       <button
@@ -458,6 +470,9 @@ export default function Toolbar() {
         title="Clear selected text formatting"
       >
         <Icon id="reset" className="inline-block w-4 h-4" y={-3} />
+      </button>
+      <button onClick={insertLink} className="mr-1">
+        <Icon id="link" className="inline-block w-4 h-4" />
       </button>
     </div>
   );

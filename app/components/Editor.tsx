@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import ContentEditable from "~/ui/ContentEditable";
@@ -10,11 +11,12 @@ import ToolbarPlugin from "~/components/Toolbar";
 import Placeholder from "~/ui/Placeholder";
 
 export default function Editor() {
+  const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
   const text = "";
   const placeholder = <Placeholder>{text}</Placeholder>;
   return (
     <>
-      <ToolbarPlugin />
+      <ToolbarPlugin setIsLinkEditMode={setIsLinkEditMode} />
       <RichTextPlugin
         contentEditable={
           <div className="relative editor-scroller">
