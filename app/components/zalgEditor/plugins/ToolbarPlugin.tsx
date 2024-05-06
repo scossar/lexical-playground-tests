@@ -1,9 +1,9 @@
 /**
- * Based on the ToolBarPlugin component from the Lexical Editor project (Meta Platforms, Inc. and affiliates).
+ * Based on the ToolBarPlugin component from the Lexical Playground project (Meta Platforms, Inc. and affiliates).
  * This source code has been modified from its original version.
  *
- * The original code is licensed under the MIT license found in the LICENSE file in the root directory of the original source tree.
- * Modifications by Zalgorithm (Simon Cossar).
+ * The original code is licensed under the MIT.
+ * Modifications (and possible errors) by Zalgorithm (Simon Cossar).
  *
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  * Copyright (c) Zalgorithm.

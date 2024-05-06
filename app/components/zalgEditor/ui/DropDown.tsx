@@ -1,9 +1,14 @@
 /**
+ * Based on the Button component from the Lexical Playground project (Meta Platforms, Inc. and affiliates).
+ * This source code has been modified from its original version.
+ *
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * The original source code is licensed under the MIT license.
+ * Modifications (and possible errors) by Zalgorithm (Simon Cossar).
  *
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ * Copyright (c) Zalgorithm.
  */
 
 import * as React from "react";

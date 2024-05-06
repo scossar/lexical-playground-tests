@@ -2,13 +2,14 @@
  * Based on https://github.com/facebook/lexical/blob/main/packages/lexical-playground/src/utils/getSelectedNode.ts
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
- * The original code is licensed under the MIT license found in the LICENSE file in the root directory of the original source tree.
+ * The original code is licensed under the MIT license.
  * Please refer to the original code. Any errors below should be attributed to me (Simon Cossar).
  *
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  * Copyright (c) Zalgorithm.
  *
  */
+
 import { $isAtNodeEnd } from "@lexical/selection";
 import { ElementNode, RangeSelection, TextNode } from "lexical";
 
