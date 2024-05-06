@@ -10,7 +10,6 @@
  */
 
 import { useCallback, useEffect, useState } from "react";
-import { $isLinkNode } from "@lexical/link";
 import {
   $isListNode,
   INSERT_ORDERED_LIST_COMMAND,
@@ -20,11 +19,8 @@ import {
 import {
   $getSelection,
   $createParagraphNode,
-  $isElementNode,
   $isRangeSelection,
   $isRootOrShadowRoot,
-  $isTextNode,
-  ElementFormatType,
   LexicalEditor,
   CAN_UNDO_COMMAND,
   CAN_REDO_COMMAND,
@@ -36,21 +32,17 @@ import {
 } from "lexical";
 import {
   $findMatchingParent,
-  $getNearestBlockElementAncestorOrThrow,
   $getNearestNodeOfType,
   mergeRegister,
 } from "@lexical/utils";
 import { $setBlocksType } from "@lexical/selection";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { $isDecoratorBlockNode } from "@lexical/react/LexicalDecoratorBlockNode";
 import {
   HeadingTagType,
   $createHeadingNode,
   $createQuoteNode,
   $isHeadingNode,
-  $isQuoteNode,
 } from "@lexical/rich-text";
-import { $getSelectedNode } from "../utils/getSelectedNode";
 import DropDown, { DropDownItem } from "../ui/DropDown";
 
 import Icon from "~/components/Icon";
@@ -91,7 +83,6 @@ export default function ToolbarPlugin() {
   const [blockType, setBlockType] = useState<BlockType>("paragraph");
   const [canUndo, setCanUndo] = useState(false);
   const [canRedo, setCanRedo] = useState(false);
-  const [elementFormat, setElementFormat] = useState<ElementFormatType>("left");
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
   const [isCode, setIsCode] = useState(false);
@@ -127,9 +118,6 @@ export default function ToolbarPlugin() {
       setIsItalic(selection.hasFormat("italic"));
       setIsCode(selection.hasFormat("code"));
 
-      const node = $getSelectedNode(selection);
-      const parent = node.getParent();
-
       if (elementDOM !== null) {
         if ($isListNode(element)) {
           const parentList = $getNearestNodeOfType<ListNode>(
@@ -148,21 +136,6 @@ export default function ToolbarPlugin() {
             setBlockType(type as BlockType);
           }
         }
-        // TODO: look into what's going on here
-        let matchingParent;
-        if ($isLinkNode(parent)) {
-          matchingParent = $findMatchingParent(
-            node,
-            (parentNode) => $isElementNode(parentNode) && !parentNode.isInline()
-          );
-        }
-        setElementFormat(
-          $isElementNode(matchingParent)
-            ? matchingParent.getFormatType()
-            : $isElementNode(node)
-            ? node.getFormatType()
-            : parent?.getFormatType() || "left"
-        );
       }
     }
   }, [activeEditor]);
@@ -209,52 +182,6 @@ export default function ToolbarPlugin() {
       )
     );
   }, [$updateToolbar, activeEditor, editor]);
-
-  const clearFormatting = useCallback(() => {
-    activeEditor.update(() => {
-      const selection = $getSelection();
-      if ($isRangeSelection(selection)) {
-        const anchor = selection.anchor;
-        const focus = selection.focus;
-        const nodes = selection.getNodes();
-        const extractedNodes = selection.extract();
-
-        if (anchor.key === focus.key && anchor.offset === focus.offset) {
-          return;
-        }
-
-        nodes.forEach((node, idx) => {
-          if ($isTextNode(node)) {
-            let textNode = node;
-            if (idx === 0 && anchor.offset !== 0) {
-              textNode = textNode.splitText(anchor.offset)[1] || textNode;
-            }
-            if (idx === nodes.length - 1) {
-              textNode = textNode.splitText(focus.offset)[0] || textNode;
-            }
-
-            const extractedTextNode = extractedNodes[0];
-            if (nodes.length === 1 && $isTextNode(extractedTextNode)) {
-              textNode = extractedTextNode;
-            }
-
-            if (textNode.__style !== "") {
-              textNode.setStyle("");
-            }
-            if (textNode.__format !== 0) {
-              textNode.setFormat(0);
-              $getNearestBlockElementAncestorOrThrow(textNode).setFormat("");
-            }
-            node = textNode;
-          } else if ($isHeadingNode(node) || $isQuoteNode(node)) {
-            node.replace($createParagraphNode(), true);
-          } else if ($isDecoratorBlockNode(node)) {
-            node.setFormat("");
-          }
-        });
-      }
-    });
-  }, [activeEditor]);
 
   function BlockFormatDropDown({
     editor,
@@ -464,13 +391,6 @@ export default function ToolbarPlugin() {
         }}
       >
         <Icon className="w-4 h-4" id="code" />
-      </button>
-      <button
-        onClick={clearFormatting}
-        className={`mr-1`}
-        title="Clear selected text formatting"
-      >
-        <Icon id="reset" className="inline-block w-4 h-4" y={-3} />
       </button>
     </div>
   );
