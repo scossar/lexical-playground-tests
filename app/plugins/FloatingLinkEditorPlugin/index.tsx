@@ -1,3 +1,4 @@
+import "./index.css";
 import * as React from "react";
 import { Dispatch, useCallback, useEffect, useRef, useState } from "react";
 
@@ -206,7 +207,7 @@ function FloatingLinkEditor({
   };
 
   return (
-    <div ref={editorRef} className="link-editor">
+    <div ref={editorRef} className="bg-red-700 link-editor">
       {!isLink ? null : isLinkEditMode ? (
         <>
           <input

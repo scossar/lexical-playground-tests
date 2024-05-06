@@ -10,7 +10,7 @@
  */
 
 import { Dispatch, useCallback, useEffect, useState } from "react";
-import { $isLinkNode } from "@lexical/link";
+import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
 import {
   $isListNode,
   INSERT_ORDERED_LIST_COMMAND,
@@ -29,7 +29,9 @@ import {
   CAN_UNDO_COMMAND,
   CAN_REDO_COMMAND,
   COMMAND_PRIORITY_CRITICAL,
+  COMMAND_PRIORITY_NORMAL,
   FORMAT_TEXT_COMMAND,
+  KEY_MODIFIER_COMMAND,
   REDO_COMMAND,
   SELECTION_CHANGE_COMMAND,
   UNDO_COMMAND,
@@ -51,6 +53,7 @@ import {
   $isQuoteNode,
 } from "@lexical/rich-text";
 import { $getSelectedNode } from "~/utils/getSelectedNode";
+import { sanitizeUrl } from "~/utils/url";
 import DropDown, { DropDownItem } from "~/ui/DropDown";
 
 import Icon from "~/components/Icon";
@@ -98,8 +101,7 @@ export default function Toolbar({
   const [elementFormat, setElementFormat] = useState<ElementFormatType>("left");
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
-
-  const [tmpToggledValue, setTmpToggledValue] = useState(false);
+  const [isLink, setIsLink] = useState(false);
 
   function dropdownActiveClass(active: boolean) {
     if (active) {
@@ -133,6 +135,11 @@ export default function Toolbar({
 
       const node = $getSelectedNode(selection);
       const parent = node.getParent();
+      if ($isLinkNode(parent) || $isLinkNode(node)) {
+        setIsLink(true);
+      } else {
+        setIsLink(false);
+      }
 
       if (elementDOM !== null) {
         if ($isListNode(element)) {
@@ -214,6 +221,31 @@ export default function Toolbar({
     );
   }, [$updateToolbar, activeEditor, editor]);
 
+  useEffect(() => {
+    return activeEditor.registerCommand(
+      KEY_MODIFIER_COMMAND,
+      (payload) => {
+        const event: KeyboardEvent = payload;
+        const { code, ctrlKey, metaKey } = event;
+
+        if (code === "KeyK" && (ctrlKey || metaKey)) {
+          event.preventDefault();
+          let url: string | null;
+          if (!isLink) {
+            setIsLinkEditMode(true);
+            url = sanitizeUrl("https://");
+          } else {
+            setIsLinkEditMode(false);
+            url = null;
+          }
+          return activeEditor.dispatchCommand(TOGGLE_LINK_COMMAND, url);
+        }
+        return false;
+      },
+      COMMAND_PRIORITY_NORMAL
+    );
+  }, [activeEditor, isLink, setIsLinkEditMode]);
+
   const clearFormatting = useCallback(() => {
     activeEditor.update(() => {
       const selection = $getSelection();
@@ -259,6 +291,16 @@ export default function Toolbar({
       }
     });
   }, [activeEditor]);
+
+  const insertLink = useCallback(() => {
+    if (!isLink) {
+      setIsLinkEditMode(true);
+      editor.dispatchCommand(TOGGLE_LINK_COMMAND, sanitizeUrl("https://"));
+    } else {
+      setIsLinkEditMode(false);
+      editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
+    }
+  }, [editor, isLink, setIsLinkEditMode]);
 
   function BlockFormatDropDown({
     editor,
@@ -395,12 +437,6 @@ export default function Toolbar({
     );
   }
 
-  const insertLink = () => {
-    setTmpToggledValue(!tmpToggledValue);
-    console.log(`toggling tmp value to: ${tmpToggledValue}`);
-    setIsLinkEditMode(tmpToggledValue);
-  };
-
   return (
     <div className="sticky flex items-center h-8 border toolbar border-b-slate-300">
       <button
@@ -471,7 +507,12 @@ export default function Toolbar({
       >
         <Icon id="reset" className="inline-block w-4 h-4" y={-3} />
       </button>
-      <button onClick={insertLink} className="mr-1">
+      <button
+        onClick={insertLink}
+        className="mr-1"
+        disabled={!isEditable}
+        aria-label="insert link"
+      >
         <Icon id="link" className="inline-block w-4 h-4" />
       </button>
     </div>
