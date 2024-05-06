@@ -94,6 +94,7 @@ export default function Toolbar() {
   const [elementFormat, setElementFormat] = useState<ElementFormatType>("left");
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
+  const [isCode, setIsCode] = useState(false);
 
   function dropdownActiveClass(active: boolean) {
     if (active) {
@@ -124,6 +125,7 @@ export default function Toolbar() {
 
       setIsBold(selection.hasFormat("bold"));
       setIsItalic(selection.hasFormat("italic"));
+      setIsCode(selection.hasFormat("code"));
 
       const node = $getSelectedNode(selection);
       const parent = node.getParent();
@@ -451,6 +453,17 @@ export default function Toolbar() {
         aria-label="Format text as italic"
       >
         <Icon className="w-4 h-4" id="italic" />
+      </button>
+      <button
+        disabled={!isEditable}
+        className={`mr-1 rounded-sm ${
+          isCode ? "bg-blue-400 text-white" : "bg-white text-slate-900"
+        }`}
+        onClick={() => {
+          activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "code");
+        }}
+      >
+        <Icon className="w-4 h-4" id="code" />
       </button>
       <button
         onClick={clearFormatting}

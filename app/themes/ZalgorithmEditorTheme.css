@@ -22,3 +22,12 @@
 .ZalgorithmEditorTheme__link {
   @apply font-semibold text-blue-900 hover:underline hover:cursor-pointer;
 }
+.ZalgorithmEditorTheme__textBold {
+  @apply font-bold;
+}
+.ZalgorithmEditorTheme__textCode {
+  @apply px-1 font-mono bg-slate-100;
+}
+.ZalgorithmEditorTheme__textItalic {
+  @apply italic;
+}

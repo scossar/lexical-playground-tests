@@ -15,6 +15,11 @@ const theme: EditorThemeClasses = {
   },
   quote: "ZalgorithmEditorTheme__quote",
   link: "ZalgorithmEditorTheme__link",
+  text: {
+    bold: "ZalgorithmEditorTheme__textBold",
+    code: "ZalgorithmEditorTheme__textCode",
+    italic: "ZalgorithmEditorTheme__textItalic",
+  },
 };
 
 export default theme;
