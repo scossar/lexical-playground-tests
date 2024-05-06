@@ -1,0 +1,3 @@
+[submodule "app/components/zalgEditor"]
+	path = app/components/zalgEditor
+	url = https://github.com/scossar/zalg-editor
