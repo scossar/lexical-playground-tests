@@ -293,8 +293,10 @@ export default function Toolbar({
   }, [activeEditor]);
 
   const insertLink = useCallback(() => {
+    console.log("in toolbar function");
     if (!isLink) {
       setIsLinkEditMode(true);
+      console.log("should be in link edit mode now");
       editor.dispatchCommand(TOGGLE_LINK_COMMAND, sanitizeUrl("https://"));
     } else {
       setIsLinkEditMode(false);

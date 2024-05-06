@@ -104,6 +104,7 @@ function FloatingLinkEditor({
 
     return true;
   }, [anchorElem, editor, setIsLinkEditMode, isLinkEditMode, linkUrl]);
+
   useEffect(() => {
     const scrollerElem = anchorElem.parentElement;
 
@@ -165,6 +166,7 @@ function FloatingLinkEditor({
   }, [editor, updateLinkEditor]);
 
   useEffect(() => {
+    console.log(`isLinkEditMode: ${isLinkEditMode}`);
     if (isLinkEditMode && inputRef.current) {
       inputRef.current.focus();
     }
@@ -207,7 +209,7 @@ function FloatingLinkEditor({
   };
 
   return (
-    <div ref={editorRef} className="bg-red-700 link-editor">
+    <div ref={editorRef} className="link-editor">
       {!isLink ? null : isLinkEditMode ? (
         <>
           <input
@@ -375,6 +377,7 @@ export default function FloatingLinkEditorPlugin({
   setIsLinkEditMode: Dispatch<boolean>;
 }): React.JSX.Element | null {
   const [editor] = useLexicalComposerContext();
+  console.log("in component");
   return useFloatingLinkEditorToolbar(
     editor,
     anchorElem,
