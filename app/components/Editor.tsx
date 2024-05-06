@@ -8,10 +8,13 @@ import { validateUrl } from "~/utils/url";
 import LexicalClickableLinkPlugin from "@lexical/react/LexicalClickableLinkPlugin";
 import ZalgAutoLinkPlugin from "./ZalgAutoLinkPlugin";
 import ToolbarPlugin from "~/components/Toolbar";
+import FloatingLinkEditorPlugin from "~/plugins/FloatingLinkEditorPlugin";
 import Placeholder from "~/ui/Placeholder";
 
 export default function Editor() {
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
+  const [floatingAnchorElem, setFloatingAnchorElem] =
+    useState<HTMLDivElement | null>(null);
   const text = "";
   const placeholder = <Placeholder>{text}</Placeholder>;
   return (
@@ -28,6 +31,13 @@ export default function Editor() {
         placeholder={placeholder}
         ErrorBoundary={LexicalErrorBoundary}
       />
+      {floatingAnchorElem && (
+        <FloatingLinkEditorPlugin
+          anchorElem={floatingAnchorElem}
+          isLinkEditMode={isLinkEditMode}
+          setIsLinkEditMode={setIsLinkEditMode}
+        />
+      )}
       <ZalgAutoLinkPlugin />
       <LinkPlugin validateUrl={validateUrl} />
       <LexicalClickableLinkPlugin />
