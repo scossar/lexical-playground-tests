@@ -1,4 +1,4 @@
-import "./index.css";
+//import "./index.css";
 import * as React from "react";
 import { Dispatch, useCallback, useEffect, useRef, useState } from "react";
 
@@ -166,7 +166,6 @@ function FloatingLinkEditor({
   }, [editor, updateLinkEditor]);
 
   useEffect(() => {
-    console.log(`isLinkEditMode: ${isLinkEditMode}`);
     if (isLinkEditMode && inputRef.current) {
       inputRef.current.focus();
     }
@@ -209,12 +208,15 @@ function FloatingLinkEditor({
   };
 
   return (
-    <div ref={editorRef} className="link-editor">
+    <div
+      ref={editorRef}
+      className="absolute top-0 left-0 z-10 flex w-full h-12 bg-white opacity-0 link-editor transition-opacity shadow-sm"
+    >
       {!isLink ? null : isLinkEditMode ? (
         <>
           <input
             ref={inputRef}
-            className="link-input"
+            className="block w-full px-2 border link-input border-slate-600"
             value={editedLinkUrl}
             onChange={(event) => {
               setEditedLinkUrl(event.target.value);
@@ -224,23 +226,25 @@ function FloatingLinkEditor({
             }}
           />
           <div>
-            <div
+            <button
               className="link-cancel"
-              role="button"
               tabIndex={0}
               onMouseDown={(event) => event.preventDefault()}
               onClick={() => {
                 setIsLinkEditMode(false);
               }}
-            />
+            >
+              cancel
+            </button>
 
-            <div
+            <button
               className="link-confirm"
-              role="button"
               tabIndex={0}
               onMouseDown={(event) => event.preventDefault()}
               onClick={handleLinkSubmission}
-            />
+            >
+              confirm
+            </button>
           </div>
         </>
       ) : (
@@ -252,25 +256,27 @@ function FloatingLinkEditor({
           >
             {linkUrl}
           </a>
-          <div
+          <button
             className="link-edit"
-            role="button"
             tabIndex={0}
             onMouseDown={(event) => event.preventDefault()}
             onClick={() => {
               setEditedLinkUrl(linkUrl);
               setIsLinkEditMode(true);
             }}
-          />
-          <div
+          >
+            edit
+          </button>
+          <button
             className="link-trash"
-            role="button"
             tabIndex={0}
             onMouseDown={(event) => event.preventDefault()}
             onClick={() => {
               editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
             }}
-          />
+          >
+            trash
+          </button>
         </div>
       )}
     </div>
@@ -377,7 +383,6 @@ export default function FloatingLinkEditorPlugin({
   setIsLinkEditMode: Dispatch<boolean>;
 }): React.JSX.Element | null {
   const [editor] = useLexicalComposerContext();
-  console.log("in component");
   return useFloatingLinkEditorToolbar(
     editor,
     anchorElem,
