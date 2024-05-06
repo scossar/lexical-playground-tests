@@ -43,9 +43,9 @@ import {
   $createQuoteNode,
   $isHeadingNode,
 } from "@lexical/rich-text";
-import DropDown, { DropDownItem } from "../ui/DropDown";
 
-import Icon from "~/components/Icon";
+import DropDown, { DropDownItem } from "../ui/DropDown";
+import EditorIcon from "../EditorIcon";
 
 export type BlockType =
   | "bullet"
@@ -72,7 +72,7 @@ const blockTypeToBlockName = {
   h5: "Heading 5",
   h6: "Heading 6",
   number: "Numbered List",
-  paragraph: "Normal",
+  paragraph: "Paragraph",
   quote: "Quote",
 };
 
@@ -249,7 +249,8 @@ export default function ToolbarPlugin() {
           onClick={formatParagraph}
         >
           <span className="text grow">
-            <Icon className="inline-block w-4 h-4" id="paragraph" /> Paragraph
+            <EditorIcon className="inline-block w-4 h-4" id="paragraph" />{" "}
+            Paragraph
           </span>
         </DropDownItem>
         <DropDownItem
@@ -259,7 +260,8 @@ export default function ToolbarPlugin() {
           onClick={() => formatHeading("h1")}
         >
           <span className="text">
-            <Icon id="heading" className="inline-block w-4 h-4" /> Heading 1
+            <EditorIcon id="heading" className="inline-block w-4 h-4" /> Heading
+            1
           </span>
         </DropDownItem>
         <DropDownItem
@@ -269,7 +271,8 @@ export default function ToolbarPlugin() {
           onClick={() => formatHeading("h2")}
         >
           <span className="text">
-            <Icon id="heading" className="inline-block w-4 h-4" /> Heading 2
+            <EditorIcon id="heading" className="inline-block w-4 h-4" /> Heading
+            2
           </span>
         </DropDownItem>
         <DropDownItem
@@ -279,7 +282,8 @@ export default function ToolbarPlugin() {
           onClick={() => formatHeading("h3")}
         >
           <span className="text">
-            <Icon id="heading" className="inline-block w-4 h-4" /> Heading 3
+            <EditorIcon id="heading" className="inline-block w-4 h-4" /> Heading
+            3
           </span>
         </DropDownItem>
         <DropDownItem
@@ -289,8 +293,8 @@ export default function ToolbarPlugin() {
           onClick={formatBulletList}
         >
           <span className="text">
-            <Icon id="list-bullet" className="inline-block w-4 h-4" /> Bullet
-            List
+            <EditorIcon id="list-bullet" className="inline-block w-4 h-4" />{" "}
+            Bullet List
           </span>
         </DropDownItem>
         <DropDownItem
@@ -300,8 +304,8 @@ export default function ToolbarPlugin() {
           onClick={formatNumberedList}
         >
           <span className="text">
-            <Icon id="list-bullet" className="inline-block w-4 h-4" /> Numbered
-            List
+            <EditorIcon id="list-bullet" className="inline-block w-4 h-4" />{" "}
+            Numbered List
           </span>
         </DropDownItem>
         <DropDownItem
@@ -311,7 +315,7 @@ export default function ToolbarPlugin() {
           onClick={formatQuote}
         >
           <span className="text">
-            <Icon id="quote" className="inline-block w-4 h-4" /> Quote
+            <EditorIcon id="quote" className="inline-block w-4 h-4" /> Quote
           </span>
         </DropDownItem>
       </DropDown>
@@ -332,7 +336,7 @@ export default function ToolbarPlugin() {
         type="button"
         aria-label="Undo"
       >
-        <Icon id="redo" className="w-3 h-3 scale-x-[-1]" />
+        <EditorIcon id="redo" className="w-3 h-3 scale-x-[-1]" />
       </button>
       <button
         disabled={!canRedo || !isEditable}
@@ -346,7 +350,7 @@ export default function ToolbarPlugin() {
         }`}
         aria-label="Redo"
       >
-        <Icon id="redo" className="w-3 h-3" />
+        <EditorIcon id="redo" className="w-3 h-3" />
       </button>
       <BlockFormatDropDown
         disabled={!isEditable}
@@ -365,7 +369,7 @@ export default function ToolbarPlugin() {
         type="button"
         aria-label="Format text as bold"
       >
-        <Icon className="w-4 h-4" id="bold" />
+        <EditorIcon className="w-4 h-4" id="bold" />
       </button>
       <button
         disabled={!isEditable}
@@ -379,7 +383,7 @@ export default function ToolbarPlugin() {
         type="button"
         aria-label="Format text as italic"
       >
-        <Icon className="w-4 h-4" id="italic" />
+        <EditorIcon className="w-4 h-4" id="italic" />
       </button>
       <button
         disabled={!isEditable}
@@ -390,7 +394,7 @@ export default function ToolbarPlugin() {
           activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "code");
         }}
       >
-        <Icon className="w-4 h-4" id="code" />
+        <EditorIcon className="w-4 h-4" id="code" />
       </button>
     </div>
   );

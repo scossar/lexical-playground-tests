@@ -19,7 +19,8 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 
-import Icon, { type AvailableIconIdTypes } from "~/components/Icon";
+//import Icon, { type AvailableIconIdTypes } from "~/components/Icon";
+import EditorIcon, { type AvailableIconIdTypes } from "../EditorIcon";
 import { BlockType } from "../plugins/ToolbarPlugin";
 
 type DropDownContextType = {
@@ -205,13 +206,13 @@ export default function DropDown({
         {buttonLabel && (
           <span className="flex items-center text dropdown-button-text">
             {blockTypeToIconId?.[blockType] && (
-              <Icon
+              <EditorIcon
                 id={blockTypeToIconId[blockType]}
                 className="inline-block w-4 h-4"
               />
             )}{" "}
             {buttonLabel}
-            <Icon className="inline-block w-4 h-4" id="caret-down" />
+            <EditorIcon className="inline-block w-4 h-4" id="caret-down" />
           </span>
         )}
         <i className="chevron-down" />
