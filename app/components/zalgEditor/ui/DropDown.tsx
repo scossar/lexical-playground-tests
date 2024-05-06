@@ -20,8 +20,7 @@ import {
 import { createPortal } from "react-dom";
 
 import Icon, { type AvailableIconIdTypes } from "~/components/Icon";
-import { BlockType } from "~/components/Toolbar";
-//import {AvailableIconIdTypes} from "~/components/Icon";
+import { BlockType } from "../plugins/ToolbarPlugin";
 
 type DropDownContextType = {
   registerItem: (ref: React.RefObject<HTMLButtonElement>) => void;
